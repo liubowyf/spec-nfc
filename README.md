@@ -15,6 +15,7 @@
 [核心能力](#核心能力) ·
 [命令体系](#命令体系) ·
 [目录结构](#目录结构) ·
+[更新记录与-releases](#更新记录与-releases) ·
 [示例](#示例) ·
 [开发与验证](#开发与验证) ·
 [贡献](#贡献) ·
@@ -265,12 +266,53 @@ status / doctor 持续收口
 
 ---
 
+## 更新记录与 Releases
+
+- 更新记录：[`CHANGELOG.md`](./CHANGELOG.md)
+- GitHub Releases：[`Releases`](https://github.com/liubowyf/spec-nfc/releases)
+- npm 页面：[`spec-nfc`](https://www.npmjs.com/package/spec-nfc)
+
+如果你是第一次接触 `specnfc`，建议优先看：
+
+1. 当前 README 的“安装与快速开始”
+2. `CHANGELOG.md` 中最新版本说明
+3. 下方“示例”中的阅读路径
+
+---
+
 ## 示例
 
+推荐按下面顺序阅读：
+
+### 1. 先看初始化后项目长什么样
+
 - 最小初始化示例：[`examples/minimal-init`](./examples/minimal-init)
+- 初始化后的 project 摘要样例：[`specs/public-samples/init`](./specs/public-samples/init)
+
+适合先理解：`.specnfc/`、`.nfc/`、`specs/`、入口投影文件分别扮演什么角色。
+
+### 2. 再看一条完整的 change 如何推进
+
+- 完整 change 样例：[`specs/public-samples/change-full`](./specs/public-samples/change-full)
+
+建议阅读顺序：
+
+1. `01-需求与方案.md`
+2. `02-技术设计与选型.md`
+3. `03-任务计划与执行.md`
+4. `04-验收与交接.md`
+
+### 3. 最后看多人接口 / service 对接如何收口
+
+- 完整 integration 样例：[`specs/public-samples/integration-full`](./specs/public-samples/integration-full)
+
+适合理解 provider / consumer / changes 之间如何通过 `integration` 对象对齐状态与阻断。
+
+### 4. 如果你想直接看完整演示仓
+
 - demo 输出示例：[`examples/demo-output`](./examples/demo-output)
-- change 完整样例：[`specs/public-samples/change-full`](./specs/public-samples/change-full)
-- integration 完整样例：[`specs/public-samples/integration-full`](./specs/public-samples/integration-full)
+
+这适合一次性看到 enterprise profile 下更完整的公开结构。
 
 ---
 

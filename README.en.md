@@ -15,6 +15,7 @@ It turns “clarify → solution design → technical design & selection → tas
 [Core Capabilities](#core-capabilities) ·
 [Command System](#command-system) ·
 [Directory Model](#directory-model) ·
+[Changelog & Releases](#changelog--releases) ·
 [Examples](#examples) ·
 [Development & Verification](#development--verification) ·
 [Contributing](#contributing) ·
@@ -266,12 +267,53 @@ These skills are governed by repository protocol and document contracts, not by 
 
 ---
 
+## Changelog & Releases
+
+- Changelog: [`CHANGELOG.md`](./CHANGELOG.md)
+- GitHub Releases: [`Releases`](https://github.com/liubowyf/spec-nfc/releases)
+- npm package: [`spec-nfc`](https://www.npmjs.com/package/spec-nfc)
+
+If you are new to `specnfc`, read in this order:
+
+1. “Installation & Quick Start” in this README
+2. the latest version entry in `CHANGELOG.md`
+3. the guided sample path below
+
+---
+
 ## Examples
 
+Recommended reading path:
+
+### 1. Start with what an initialized repository looks like
+
 - Minimal init sample: [`examples/minimal-init`](./examples/minimal-init)
-- Demo output sample: [`examples/demo-output`](./examples/demo-output)
+- Project summary sample after init: [`specs/public-samples/init`](./specs/public-samples/init)
+
+Use these to understand the roles of `.specnfc/`, `.nfc/`, `specs/`, and the generated entry projection files.
+
+### 2. Then inspect how a full change moves through the workflow
+
 - Full change sample: [`specs/public-samples/change-full`](./specs/public-samples/change-full)
+
+Recommended read order:
+
+1. `01-需求与方案.md`
+2. `02-技术设计与选型.md`
+3. `03-任务计划与执行.md`
+4. `04-验收与交接.md`
+
+### 3. Then inspect how interface / service alignment is closed
+
 - Full integration sample: [`specs/public-samples/integration-full`](./specs/public-samples/integration-full)
+
+This is the best place to see how provider / consumer / changes are aligned through the `integration` object.
+
+### 4. If you want to see a fuller demo repository
+
+- Demo output sample: [`examples/demo-output`](./examples/demo-output)
+
+This shows a broader public-facing enterprise-profile structure in one place.
 
 ---
 
