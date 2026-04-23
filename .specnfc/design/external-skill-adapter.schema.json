@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc external skill adapter",
+  "type": "object",
+  "required": [
+    "adapterId",
+    "source",
+    "sourceSkillId",
+    "version",
+    "owner",
+    "namespace",
+    "trustTier",
+    "scope",
+    "targetId",
+    "stage",
+    "outputArtifacts",
+    "evidenceRefs",
+    "requestedWritebacks",
+    "createdAt"
+  ],
+  "properties": {
+    "adapterId": { "type": "string" },
+    "source": { "type": "string" },
+    "sourceSkillId": { "type": "string" },
+    "version": { "type": "string" },
+    "owner": { "type": "string" },
+    "namespace": { "type": "string" },
+    "trustTier": {
+      "type": "string",
+      "enum": ["readonly", "workspace", "governed"]
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["repository", "project", "change", "integration"]
+    },
+    "targetId": { "type": "string" },
+    "stage": { "type": "string" },
+    "outputArtifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "requestedWritebacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["targetDocPath", "writebackType"],
+        "properties": {
+          "targetDocPath": { "type": "string" },
+          "writebackType": { "type": "string" },
+          "requiredSections": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,62 @@
+{
+  "name": "quality",
+  "description": "质量模块",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_QUALITY_VALIDATION_REQUIRED",
+        "message": "进入实现和交接前必须满足测试、回归与验证要求"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_QUALITY_DOCS_REVIEW",
+        "message": "仓级质量与验证文档需要持续维护"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/quality",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/quality/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/quality/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/test-strategy.md",
+      "target": ".specnfc/quality/test-strategy.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/regression-checklist.md",
+      "target": ".specnfc/quality/regression-checklist.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/release-verification.md",
+      "target": ".specnfc/quality/release-verification.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/test-case-template.md",
+      "target": ".specnfc/quality/test-case-template.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/bugfix-regression-template.md",
+      "target": ".specnfc/quality/bugfix-regression-template.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

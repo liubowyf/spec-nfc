@@ -142,23 +142,25 @@ async function runCreateChange({ repoRoot, args, flags }) {
     data: {
       action: "create",
       change: result,
-      nextStep: buildCommandNextStep({
-        currentPhase: result.canonicalStage,
-        step: "clarify_requirements",
-        stepLabel: "先完成需求与方案",
-        primaryAction: "补充 01-需求与方案.md",
-        primaryDoc: "01-需求与方案.md",
-        primaryGoal: "先把问题定义、目标/非目标、范围、当前选择与验收口径写清楚。",
-        requiredSections: ["问题定义", "目标", "非目标", "范围", "当前选择", "风险与验收口径"],
-        doNotDoYet: [
-          "不要先维护 `03-任务计划与执行.md`",
-          "不要直接进入代码实现或测试",
-          "不要先补 `04-验收与交接.md`"
-        ],
-        exitCriteria: [
-          "`01-需求与方案.md` 已补齐关键章节",
-          `重新运行 \`specnfc change check ${result.changeId}\` 后获取下一步分流`
-        ],
+        nextStep: buildCommandNextStep({
+          currentPhase: result.canonicalStage,
+          step: "clarify_requirements",
+          stepLabel: "先完成需求与方案",
+          primaryAction: "补充 01-需求与方案.md",
+          primaryDoc: "01-需求与方案.md",
+          primaryGoal: "先逐轮提问并获得确认，再把问题定义、目标/非目标、范围、当前选择与验收口径写清楚。",
+          requiredSections: ["问题定义", "目标", "非目标", "范围", "当前选择", "澄清确认记录", "风险与验收口径"],
+          doNotDoYet: [
+            "不要先维护 `03-任务计划与执行.md`",
+            "不要直接进入代码实现或测试",
+            "不要先补 `04-验收与交接.md`",
+            "不要在未确认前把 `当前选择` 写成最终结论"
+          ],
+          exitCriteria: [
+            "`01-需求与方案.md` 已补齐关键章节",
+            "`澄清确认记录` 已补最近一次确认问题、答复摘要与确认状态",
+            `重新运行 \`specnfc change check ${result.changeId}\` 后获取下一步分流`
+          ],
         afterPrimaryAction: `补完 01 后，运行 \`specnfc change check ${result.changeId}\``,
         completed: ["change dossier 已创建"],
         recommendedNext: [
@@ -178,8 +180,8 @@ async function runCreateChange({ repoRoot, args, flags }) {
           items: [
             "当前阶段：需求澄清",
             "当前步骤：先完成需求与方案",
-            "当前主动作：补充 `01-需求与方案.md`",
-            "当前不该做：不要先维护 03，也不要直接进入代码实现",
+            "当前主动作：先提一个关键澄清问题，再补 `01-需求与方案.md`",
+            "当前不该做：不要先维护 03，也不要直接进入代码实现，更不要在未确认前写死当前选择",
             `完成后下一步：运行 \`specnfc change check ${result.changeId}\``
           ]
         },
@@ -200,7 +202,7 @@ async function runCreateChange({ repoRoot, args, flags }) {
     },
     warnings: [],
     next: [
-      `先补 \`${result.changeRoot}/01-需求与方案.md\` 的问题定义、目标/非目标、范围、当前选择与验收口径`,
+      `先向需求提出方提一个关键问题，再补 \`${result.changeRoot}/01-需求与方案.md\` 的问题定义、目标/非目标、范围、当前选择、澄清确认记录与验收口径`,
       `补完后运行 \`specnfc change check ${result.changeId}\``
     ]
   });
@@ -364,6 +366,9 @@ function buildChangeCheckNext(report) {
     if (report.nextStep.primaryDoc) {
       next.push(`当前文档：\`${report.nextStep.primaryDoc}\``);
     }
+    if ((report.nextStep.requiredSections || []).length) {
+      next.push(`当前需补章节：${report.nextStep.requiredSections.join("、")}`);
+    }
     if ((report.nextStep.doNotDoYet || []).length) {
       next.push(`当前不该做：${report.nextStep.doNotDoYet.join("；")}`);
     }
@@ -401,12 +406,16 @@ function buildChangeCheckNext(report) {
     (report.changes || []).some((change) => Boolean(change?.docRoles)) ||
     Array.from(mergedRiskCodes).some((code) => riskCodes.has(code));
 
-  if (gapCodes.has("MISSING_REQUIREMENTS_SCOPE") || gapCodes.has("MISSING_REQUIREMENTS_ACCEPTANCE")) {
+  if (gapCodes.has("MISSING_REQUIREMENTS_CONFIRMATION")) {
+    next.push("先向需求提出方确认当前选择，再补 `01-需求与方案.md` 的澄清确认记录");
+  } else if (gapCodes.has("MISSING_REQUIREMENTS_SCOPE") || gapCodes.has("MISSING_REQUIREMENTS_ACCEPTANCE")) {
     next.push("先补 `01-需求与方案.md` 的范围和验收口径");
   } else if (riskCodes.has("PLACEHOLDER_REQUIREMENTS_AND_SOLUTION")) {
     next.push("先补 `01-需求与方案.md` 的问题定义、方案选择与验收口径");
   }
-  if (gapCodes.has("MISSING_TECHNICAL_CONSTRAINTS") || gapCodes.has("MISSING_TECHNICAL_OPTIONS")) {
+  if (gapCodes.has("MISSING_TECHNICAL_CONFIRMATION")) {
+    next.push("先向使用者确认当前推荐方案，再补 `02-技术设计与选型.md` 的设计确认记录");
+  } else if (gapCodes.has("MISSING_TECHNICAL_CONSTRAINTS") || gapCodes.has("MISSING_TECHNICAL_OPTIONS")) {
     next.push("先补 `02-技术设计与选型.md` 的约束、候选方案与选型结论");
   } else if (riskCodes.has("PLACEHOLDER_TECHNICAL_DESIGN")) {
     next.push("先补 `02-技术设计与选型.md` 的候选方案对比和技术结论");

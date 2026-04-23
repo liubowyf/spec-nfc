@@ -1,0 +1,72 @@
+{
+  "name": "governance",
+  "description": "治理层",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_GOVERNANCE_GATES_REQUIRED",
+        "message": "涉及高风险边界时必须满足治理层门禁与裁决点要求"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_GOVERNANCE_DOCS_REVIEW",
+        "message": "仓级治理文档需要持续维护，以防个人流程覆盖团队规则"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/governance",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/governance/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/governance/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/decision-gates.md",
+      "target": ".specnfc/governance/decision-gates.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/release-handoff.md",
+      "target": ".specnfc/governance/release-handoff.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/security-boundaries.md",
+      "target": ".specnfc/governance/security-boundaries.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/multi-repo.md",
+      "target": ".specnfc/governance/multi-repo.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/risk-matrix.md",
+      "target": ".specnfc/governance/risk-matrix.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/review-checklist.md",
+      "target": ".specnfc/governance/review-checklist.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/personal-skills.md",
+      "target": ".specnfc/governance/personal-skills.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

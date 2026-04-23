@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc project index",
+  "type": "object",
+  "required": [
+    "projectDocs",
+    "changeRefs",
+    "integrationRefs",
+    "latestIterations",
+    "updatedAt"
+  ],
+  "properties": {
+    "projectId": {
+      "type": "string"
+    },
+    "teamId": {
+      "type": ["string", "null"]
+    },
+    "teamContextRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sourceRepo",
+          "path"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceRepo": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "summaryPath": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "projectDocs": {
+      "type": "object",
+      "required": [
+        "readme",
+        "summary"
+      ],
+      "properties": {
+        "readme": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "readingPath": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "changeRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "canonicalStage": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "integrationRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "canonicalStage": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "latestIterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "change",
+              "integration"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "linkedDocs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "updatedAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

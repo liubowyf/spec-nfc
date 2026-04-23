@@ -1,0 +1,47 @@
+{
+  "name": "design-api",
+  "description": "接口设计模块",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_API_DESIGN_REQUIRED",
+        "message": "涉及接口变更时必须补齐接口设计文档与评审清单"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_API_TEMPLATE_REVIEW",
+        "message": "仓级 API 设计模板应与团队当前接口规范保持一致"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/design/api",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/design/api/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/template.md",
+      "target": ".specnfc/design/api/template.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/design/api/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/review-checklist.md",
+      "target": ".specnfc/design/api/review-checklist.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

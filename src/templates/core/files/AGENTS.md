@@ -28,6 +28,13 @@
 - 未完成 `clarify / design / plan`，不得进入 `execute`
 - 所有正式开发、验证、交付、归档动作都必须绑定一个当前 `change`
 
+## 澄清 / 设计阶段确认规则
+- 处于 `clarify` 或 `design` 时，必须先提问、再写结论。
+- 每轮只允许一个关键问题；拿到答复后再进入下一轮。
+- 未经确认，不得把 `01-需求与方案.md` 中的“当前选择”或 `02-技术设计与选型.md` 中的“选型结论”写成最终结论。
+- 若当前只能基于仓内证据做推断，必须明确标注为“待确认”，并在正式文档写入确认记录与待确认事项。
+- 若 `change check / status / doctor` 显示存在未确认选择，先继续澄清，不得进入 `plan / execute`。
+
 ## 标准执行顺序
 1. 先读取 `specs/project/summary.md` 与 `.specnfc/indexes/project-index.json`
 2. 再读取当前 `change` 的 `meta.json`
@@ -51,6 +58,7 @@
 
 ## 禁止事项
 - 禁止跳过 `clarify / design / plan` 直接进入实现
+- 禁止在 `clarify / design` 阶段未询问使用者就自行拍板“当前选择 / 选型结论”
 - 禁止未绑定 change 就开始正式开发、验证或交付
 - 禁止脱离当前 `change` 改动无关代码
 - 禁止静默改变接口、数据库结构和发布边界

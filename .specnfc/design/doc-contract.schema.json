@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc document contract",
+  "type": "object",
+  "required": [
+    "document",
+    "requiredSections"
+  ],
+  "properties": {
+    "document": {
+      "type": "string"
+    },
+    "requiredSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blockingSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "advisorySections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "writebackSources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

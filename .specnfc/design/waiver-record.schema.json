@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc waiver record",
+  "type": "object",
+  "required": [
+    "waiverId",
+    "scope",
+    "target",
+    "reason",
+    "approvedBy",
+    "validUntil",
+    "createdAt"
+  ],
+  "properties": {
+    "waiverId": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "target": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reason": {
+      "type": "string"
+    },
+    "approvedBy": {
+      "type": "string"
+    },
+    "modeOverride": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "validUntil": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

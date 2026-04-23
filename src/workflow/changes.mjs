@@ -1046,16 +1046,18 @@ function buildChangeStepGuide({ target, missing, risks, blocking, projectProtoco
       stepLabel: "先完成需求与方案",
       primaryAction: `补充 ${target.docRoles?.requirementsAndSolution ?? CHANGE_DOC_ROLE_FILES.requirementsAndSolution}`,
       primaryDoc: target.docRoles?.requirementsAndSolution ?? CHANGE_DOC_ROLE_FILES.requirementsAndSolution,
-      primaryGoal: "先把问题边界、目标范围、方案备选、当前选择与验收口径写清楚。",
-      requiredSections: ["问题定义", "目标", "非目标", "范围", "方案备选", "当前选择", "风险与验收口径"],
+      primaryGoal: "先逐轮提问并获得确认，再把问题边界、目标范围、方案备选、当前选择与验收口径写清楚。",
+      requiredSections: ["问题定义", "目标", "非目标", "范围", "方案备选", "当前选择", "澄清确认记录", "风险与验收口径"],
       doNotDoYet: [
         "不要先维护 `03-任务计划与执行.md`",
         "不要先进入代码实现或测试",
-        "不要先补 `04-验收与交接.md`"
+        "不要先补 `04-验收与交接.md`",
+        "不要在未确认前把 `当前选择` 写成最终结论"
       ],
       exitCriteria: [
         "`01-需求与方案.md` 不再是占位内容",
         "已明确范围、当前选择与验收口径",
+        "已补齐 `澄清确认记录`，并明确最近一次确认问题、答复摘要与确认状态",
         `重新运行 \`specnfc change check ${target.id}\` 后进入技术设计或任务计划分流`
       ],
       afterPrimaryAction: `补完 01 后，重新运行 \`specnfc change check ${target.id}\``,
@@ -1077,17 +1079,19 @@ function buildChangeStepGuide({ target, missing, risks, blocking, projectProtoco
       primaryAction: `补充 ${target.docRoles?.technicalDesign ?? CHANGE_DOC_ROLE_FILES.technicalDesign}`,
       primaryDoc: target.docRoles?.technicalDesign ?? CHANGE_DOC_ROLE_FILES.technicalDesign,
       primaryGoal: technicalDecision.reason
-        ? `当前 change 已触发独立技术设计：${technicalDecision.reason}`
-        : "当前 change 已触发独立技术设计，需要先收敛技术约束、候选方案与选型结论。",
-      requiredSections: ["触发说明", "技术背景与约束", "候选方案对比", "选型结论", "影响面与验证思路"],
+        ? `当前 change 已触发独立技术设计：${technicalDecision.reason}；必须先逐轮确认，再定稿选型结论`
+        : "当前 change 已触发独立技术设计，需要先逐轮确认并收敛技术约束、候选方案与选型结论。",
+      requiredSections: ["触发说明", "技术背景与约束", "候选方案对比", "选型结论", "设计确认记录", "影响面与验证思路"],
       doNotDoYet: [
         "不要先维护 `03-任务计划与执行.md`",
         "不要直接进入代码实现或测试",
-        "不要先补 `04-验收与交接.md`"
+        "不要先补 `04-验收与交接.md`",
+        "不要在未确认前把 `选型结论` 写成最终拍板"
       ],
       exitCriteria: [
         "`02-技术设计与选型.md` 不再是占位内容",
         "已明确复杂度、技术约束、候选方案与选型结论",
+        "已补齐 `设计确认记录`，并明确最近一次确认问题、答复摘要与确认状态",
         `重新运行 \`specnfc change check ${target.id}\` 后才能进入任务计划与执行`
       ],
       afterPrimaryAction: `补完 02 后，重新运行 \`specnfc change check ${target.id}\``,
@@ -1194,6 +1198,13 @@ export function buildClarifyInterviewProtocol(target) {
         question: "至少有哪些可行方案？当前为什么选这一种，不选另外方案的依据是什么？"
       },
       {
+        name: "澄清确认记录",
+        sections: ["澄清确认记录"],
+        codes: ["MISSING_REQUIREMENTS_CONFIRMATION"],
+        confirmed: "当前选择已完成显式确认",
+        question: "请明确确认：当前选择是否就是这次要推进的方案？如果不是，请指出应调整的方向。"
+      },
+      {
         name: "风险与验收口径",
         sections: ["风险与验收口径"],
         codes: ["MISSING_REQUIREMENTS_ACCEPTANCE"],
@@ -1233,6 +1244,13 @@ export function buildTechnicalDesignInterviewProtocol(target, technicalDecision)
         question: "最终采用哪种方案？放弃其他方案的关键理由与决策边界是什么？"
       },
       {
+        name: "设计确认记录",
+        sections: ["设计确认记录"],
+        codes: ["MISSING_TECHNICAL_CONFIRMATION"],
+        confirmed: "当前设计结论已完成显式确认",
+        question: "请明确确认：当前推荐方案是否就是本次要拍板的技术方案？如果不是，应该改成哪条路线？"
+      },
+      {
         name: "影响面与验证思路",
         sections: ["影响面与验证思路"],
         codes: ["MISSING_TECHNICAL_VERIFICATION"],
@@ -1245,8 +1263,12 @@ export function buildTechnicalDesignInterviewProtocol(target, technicalDecision)
 }
 
 function buildInterviewProtocol({ groups, openCodes }) {
+  let hasEarlierPending = false;
   const gateStatuses = groups.map((group, index) => {
-    const open = group.codes.some((code) => openCodes.has(code));
+    const open = hasEarlierPending || group.codes.some((code) => openCodes.has(code));
+    if (open) {
+      hasEarlierPending = true;
+    }
     return {
       ...group,
       index,
@@ -1268,7 +1290,8 @@ function buildInterviewProtocol({ groups, openCodes }) {
       status: item.index === focusGate.index && item.status !== "complete" ? "focus" : item.status
     })),
     focusQuestion: focusGate.question,
-    writebackSections: focusGate.sections
+    writebackSections: focusGate.sections,
+    confirmationRequired: true
   };
 }
 
@@ -1901,7 +1924,9 @@ function evaluateMaturityState({ meta, delivery, issues }) {
 
   if (
     codes.has("PLACEHOLDER_REQUIREMENTS_AND_SOLUTION") ||
+    codes.has("UNCONFIRMED_REQUIREMENTS_SELECTION") ||
     codes.has("PLACEHOLDER_TECHNICAL_DESIGN") ||
+    codes.has("UNCONFIRMED_TECHNICAL_SELECTION") ||
     codes.has("PLACEHOLDER_PLAN_AND_EXECUTION") ||
     codes.has("PLACEHOLDER_ACCEPTANCE_AND_HANDOFF") ||
     codes.has("PLACEHOLDER_PROPOSAL") ||
@@ -2006,6 +2031,7 @@ function buildSpecPlaceholderIssue({ content, relative }) {
 
 function buildRequirementsAndSolutionPlaceholderIssue({ content, relative }) {
   const details = [];
+  const confirmation = analyzeRequirementsConfirmation(content);
 
   if (content.includes("说明这次 change 要解决的核心问题") || hasEmptyBulletPlaceholder(content, "目标 1")) {
     details.push(createGapDetail({
@@ -2056,6 +2082,25 @@ function buildRequirementsAndSolutionPlaceholderIssue({ content, relative }) {
       section: "验收口径",
       action: "补验收口径"
     }));
+  }
+
+  if (confirmation.selectionPresent && !confirmation.confirmed) {
+    details.push(createGapDetail({
+      code: "MISSING_REQUIREMENTS_CONFIRMATION",
+      file: relative,
+      section: "澄清确认记录",
+      action: "先向需求提出方确认当前选择，再补澄清确认记录"
+    }));
+  }
+
+  if (confirmation.selectionPresent && !confirmation.confirmed) {
+    return createPlaceholderIssue({
+      code: "UNCONFIRMED_REQUIREMENTS_SELECTION",
+      relative,
+      message: `01-需求与方案.md 已写入当前选择，但缺少显式确认记录：${relative}`,
+      action: "先向需求提出方确认当前选择，再补 `澄清确认记录`",
+      details
+    });
   }
 
   if (
@@ -2124,6 +2169,7 @@ function buildDesignPlaceholderIssue({ content, relative }) {
 
 function buildTechnicalDesignPlaceholderIssue({ content, relative }) {
   const details = [];
+  const confirmation = analyzeTechnicalDesignConfirmation(content);
 
   if (
     content.includes("- 复杂度：低 / 中 / 高") ||
@@ -2191,6 +2237,25 @@ function buildTechnicalDesignPlaceholderIssue({ content, relative }) {
       section: "影响面与验证思路",
       action: "补影响面与验证思路"
     }));
+  }
+
+  if (confirmation.selectionPresent && !confirmation.confirmed) {
+    details.push(createGapDetail({
+      code: "MISSING_TECHNICAL_CONFIRMATION",
+      file: relative,
+      section: "设计确认记录",
+      action: "先向使用者确认当前推荐方案，再补设计确认记录"
+    }));
+  }
+
+  if (confirmation.selectionPresent && !confirmation.confirmed) {
+    return createPlaceholderIssue({
+      code: "UNCONFIRMED_TECHNICAL_SELECTION",
+      relative,
+      message: `02-技术设计与选型.md 已写入选型结论，但缺少显式确认记录：${relative}`,
+      action: "先向使用者确认当前推荐方案，再补 `设计确认记录`",
+      details
+    });
   }
 
   if (
@@ -2307,8 +2372,88 @@ function createGapDetail({ code, file, section, action }) {
   };
 }
 
+function analyzeRequirementsConfirmation(content) {
+  const currentSelection = extractNamedField(content, ["当前选择", "选择"])
+    || extractSectionBody(content, "方案结论");
+  const question = extractNamedField(content, ["最近一次确认问题"]);
+  const answer = extractNamedField(content, ["最近一次用户答复摘要"]);
+  const confirmed = extractNamedField(content, ["当前选择是否已确认"]);
+  const pending = extractNamedField(content, ["尚待确认事项"]);
+
+  return {
+    selectionPresent: Boolean(currentSelection),
+    confirmed: Boolean(question && answer && isConfirmedValue(confirmed) && isResolvedValue(pending))
+  };
+}
+
+function analyzeTechnicalDesignConfirmation(content) {
+  const currentSelection = extractNamedField(content, ["当前选择", "选择"])
+    || extractSectionBody(content, "选型结论", [
+      /^-\s*当前选择\s*[：:]\s*$/m,
+      /^-\s*选择理由\s*[：:]\s*$/m,
+      /^-\s*放弃其他方案的原因\s*[：:]\s*$/m
+    ]);
+  const question = extractNamedField(content, ["最近一次确认问题"]);
+  const answer = extractNamedField(content, ["最近一次用户答复摘要"]);
+  const confirmed = extractNamedField(content, ["选型结论是否已确认"]);
+  const pending = extractNamedField(content, ["尚待确认事项"]);
+
+  return {
+    selectionPresent: Boolean(currentSelection),
+    confirmed: Boolean(question && answer && isConfirmedValue(confirmed) && isResolvedValue(pending))
+  };
+}
+
 function hasEmptyBulletPlaceholder(content, label) {
   return new RegExp(`-\\s*${escapeRegExp(label)}\\s*[：:]\\s*$`, "m").test(String(content || ""));
+}
+
+function extractNamedField(content, labels = []) {
+  for (const label of labels) {
+    const match = String(content || "").match(new RegExp(`^[ \\t]*-[ \\t]*${escapeRegExp(label)}[ \\t]*[：:][ \\t]*([^\\n\\r]*)$`, "m"));
+    if (!match) {
+      continue;
+    }
+    const value = sanitizeTemplateValue(match[1]);
+    if (value) {
+      return value;
+    }
+  }
+
+  return "";
+}
+
+function extractSectionBody(content, heading, placeholderPatterns = []) {
+  const match = String(content || "").match(
+    new RegExp(`^##\\s*${escapeRegExp(heading)}\\s*$([\\s\\S]*?)(?=^##\\s+|$)`, "m")
+  );
+  if (!match) {
+    return "";
+  }
+
+  const body = String(match[1] || "").trim();
+  if (!body) {
+    return "";
+  }
+
+  const normalized = body
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .filter((line) => !placeholderPatterns.some((pattern) => pattern.test(line)))
+    .join("\n")
+    .trim();
+
+  return normalized;
+}
+
+function isConfirmedValue(value) {
+  return ["是", "yes", "true", "y", "已确认", "confirmed"].includes(String(value || "").trim().toLowerCase());
+}
+
+function isResolvedValue(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  return !normalized || ["无", "none", "n/a", "不适用", "已全部确认", "无。"].includes(normalized);
 }
 
 function collectMaturityGaps(issues = []) {
@@ -2330,6 +2475,14 @@ function collectMaturityGaps(issues = []) {
 
 function describePrimaryGapAction(gaps = []) {
   const codes = new Set(gaps.map((item) => item.code));
+
+  if (codes.has("MISSING_REQUIREMENTS_CONFIRMATION")) {
+    return "先向需求提出方确认当前选择，再补 `01-需求与方案.md` 的澄清确认记录";
+  }
+
+  if (codes.has("MISSING_TECHNICAL_CONFIRMATION")) {
+    return "先向使用者确认当前推荐方案，再补 `02-技术设计与选型.md` 的设计确认记录";
+  }
 
   if (codes.has("MISSING_REQUIREMENTS_SCOPE") || codes.has("MISSING_REQUIREMENTS_ACCEPTANCE")) {
     return "先补 `01-需求与方案.md` 的范围和验收口径";
@@ -2442,7 +2595,7 @@ function normalizeTechnicalComplexity(value) {
 }
 
 function extractTechnicalDesignField(content, label) {
-  const match = String(content || "").match(new RegExp(`-\\s*${escapeRegExp(label)}\\s*[：:]\\s*(.*)`));
+  const match = String(content || "").match(new RegExp(`^[ \\t]*-[ \\t]*${escapeRegExp(label)}[ \\t]*[：:][ \\t]*([^\\n\\r]*)$`, "m"));
   if (!match) {
     return "";
   }
@@ -2462,11 +2615,11 @@ function isAffirmativeValue(value) {
 }
 
 function isRequirementsAndSolutionReady(target) {
-  return !hasOpenChangeRisk(target, ["PLACEHOLDER_REQUIREMENTS_AND_SOLUTION"]) && !hasMissingDocRole(target, "requirementsAndSolution");
+  return !hasOpenChangeRisk(target, ["PLACEHOLDER_REQUIREMENTS_AND_SOLUTION", "UNCONFIRMED_REQUIREMENTS_SELECTION"]) && !hasMissingDocRole(target, "requirementsAndSolution");
 }
 
 function isTechnicalDesignReady(target) {
-  return !hasOpenChangeRisk(target, ["PLACEHOLDER_TECHNICAL_DESIGN"]) && !hasMissingDocRole(target, "technicalDesign");
+  return !hasOpenChangeRisk(target, ["PLACEHOLDER_TECHNICAL_DESIGN", "UNCONFIRMED_TECHNICAL_SELECTION"]) && !hasMissingDocRole(target, "technicalDesign");
 }
 
 function isPlanAndExecutionReady(target) {

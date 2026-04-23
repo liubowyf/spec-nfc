@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc verification record",
+  "type": "object",
+  "required": [
+    "recordId",
+    "scope",
+    "targetId",
+    "stage",
+    "verificationType",
+    "executor",
+    "result",
+    "evidenceRefs",
+    "summary",
+    "createdAt"
+  ],
+  "properties": {
+    "recordId": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "change",
+        "integration"
+      ]
+    },
+    "targetId": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "verificationType": {
+      "type": "string"
+    },
+    "executor": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "partial"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

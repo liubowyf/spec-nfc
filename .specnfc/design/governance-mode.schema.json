@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc governance mode",
+  "type": "object",
+  "required": [
+    "mode",
+    "rules"
+  ],
+  "properties": {
+    "mode": {
+      "enum": [
+        "advisory",
+        "guided",
+        "strict",
+        "locked"
+      ]
+    },
+    "rules": {
+      "type": "object"
+    },
+    "waiverPolicy": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

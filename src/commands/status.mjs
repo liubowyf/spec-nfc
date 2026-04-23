@@ -302,6 +302,8 @@ function buildStepAwareProtocolItems(protocol) {
     `当前步骤：${protocol.stepLabel || protocol.step || "当前无"}`,
     `主动作：${formatPrimaryAction(protocol.primaryAction) || "当前无"}`,
     `当前文档：${protocol.primaryDoc ? `\`${protocol.primaryDoc}\`` : "当前无"}`,
+    `当前需补章节：${protocol.requiredSections?.join("、") || "当前无"}`,
+    `当前不该做：${protocol.doNotDoYet?.join("；") || "当前无"}`,
     `已完成：${(protocol.completed || []).join("、") || "当前无"}`,
     `缺失：${(protocol.missing || []).join("、") || "当前无"}`,
     `阻断：${(protocol.blocking || []).join("、") || "当前无"}`

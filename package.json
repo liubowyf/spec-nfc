@@ -1,0 +1,38 @@
+{
+  "name": "spec-nfc",
+  "version": "3.2.1",
+  "description": "Spec-driven Coding 协议与 CLI 工具仓",
+  "type": "module",
+  "private": true,
+  "files": [
+    "bin",
+    "src",
+    "skill-packs",
+    ".specnfc/design",
+    "CHANGELOG.md",
+    "README.md",
+    "README.en.md",
+    "SUPPORT.md",
+    "MAINTAINERS.md",
+    "LICENSE"
+  ],
+  "bin": {
+    "specnfc": "bin/specnfc.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node ./bin/specnfc.mjs",
+    "doctor": "node ./bin/specnfc.mjs doctor",
+    "bootstrap": "node ./scripts/bootstrap.mjs",
+    "bootstrap:quick": "node ./scripts/bootstrap.mjs --skip-test",
+    "public:assemble": "node ./scripts/assemble-public.mjs",
+    "public:assemble:dry-run": "node ./scripts/assemble-public.mjs --dry-run --json",
+    "public:pack-verify": "node ./scripts/pack-verify.mjs --json",
+    "test:release": "node ./scripts/test-release.mjs",
+    "release": "node ./scripts/release.mjs",
+    "release:dry-run": "node ./scripts/release.mjs --dry-run --json"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc error --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "error",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": false
+    },
+    "command": {
+      "type": "string"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

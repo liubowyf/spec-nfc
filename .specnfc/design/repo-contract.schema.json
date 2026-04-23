@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc repo contract",
+  "type": "object",
+  "required": [
+    "repoId",
+    "repoName",
+    "protocolVersion",
+    "governanceMode",
+    "activeSkillPack"
+  ],
+  "properties": {
+    "repoId": {
+      "type": "string"
+    },
+    "repoName": {
+      "type": "string"
+    },
+    "teamId": {
+      "type": "string"
+    },
+    "projectId": {
+      "type": "string"
+    },
+    "protocolVersion": {
+      "type": "string"
+    },
+    "governanceMode": {
+      "enum": [
+        "advisory",
+        "guided",
+        "strict",
+        "locked"
+      ]
+    },
+    "activeSkillPack": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "locale": {
+          "type": "string"
+        }
+      }
+    },
+    "entryProjectionVersion": {
+      "type": "string"
+    },
+    "runtimeVersion": {
+      "type": "string"
+    },
+    "currentProfile": {
+      "type": "string"
+    },
+    "currentStagePolicy": {
+      "type": "string"
+    },
+    "complianceLevel": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

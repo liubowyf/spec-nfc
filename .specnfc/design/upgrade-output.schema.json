@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc upgrade --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": { "const": true },
+    "command": { "const": "upgrade" },
+    "mode": { "const": "json" },
+    "cwd": { "type": "string" },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "next": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "fromVersion",
+        "toVersion",
+        "dryRun",
+        "managedFilesCreated",
+        "managedFilesRefreshed",
+        "managedFilesTracked",
+        "managedFilesConflicted",
+        "managedFilesSkipped",
+        "managedFileDiffs",
+        "protocolFilesCreated",
+        "changeFilesCreated",
+        "integrationFilesCreated",
+        "skippedChanges",
+        "skippedIntegrations",
+        "runtimeMigration",
+        "updatedConfig",
+        "impactSummary",
+        "migrationSummary",
+        "supportAssessment",
+        "riskSummary",
+        "manualActions"
+      ],
+      "properties": {
+        "fromVersion": { "type": "string" },
+        "toVersion": { "type": "string" },
+        "dryRun": { "type": "boolean" },
+        "managedFilesCreated": { "type": "array", "items": { "type": "string" } },
+        "managedFilesRefreshed": { "type": "array", "items": { "type": "string" } },
+        "managedFilesTracked": { "type": "array", "items": { "type": "string" } },
+        "managedFilesConflicted": { "type": "array", "items": { "type": "string" } },
+        "managedFilesSkipped": { "type": "array", "items": { "type": "string" } },
+        "managedFileDiffs": { "type": "object" },
+        "protocolFilesCreated": { "type": "array", "items": { "type": "string" } },
+        "changeFilesCreated": { "type": "array", "items": { "type": "string" } },
+        "integrationFilesCreated": { "type": "array", "items": { "type": "string" } },
+        "skippedChanges": { "type": "array", "items": { "type": "string" } },
+        "skippedIntegrations": { "type": "array", "items": { "type": "string" } },
+        "runtimeMigration": {
+          "type": "object",
+          "required": ["detected", "reportPath"],
+          "properties": {
+            "detected": { "type": "boolean" },
+            "reportPath": { "type": ["string", "null"] }
+          },
+          "additionalProperties": true
+        },
+        "updatedConfig": {
+          "type": "object",
+          "required": ["templateVersionChanged", "changeStructureChanged"],
+          "properties": {
+            "templateVersionChanged": { "type": "boolean" },
+            "changeStructureChanged": { "type": "boolean" }
+          },
+          "additionalProperties": true
+        },
+        "impactSummary": {
+          "type": "object",
+          "required": ["protocolFilesCreatedCount", "changeFilesCreatedCount"],
+          "properties": {
+            "protocolFilesCreatedCount": { "type": "number" },
+            "changeFilesCreatedCount": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "migrationSummary": {
+          "type": "object",
+          "required": ["fromVersion", "toVersion"],
+          "properties": {
+            "fromVersion": { "type": "string" },
+            "toVersion": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "supportAssessment": {
+          "type": "object",
+          "required": ["level", "summary"],
+          "properties": {
+            "level": { "type": "string" },
+            "summary": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "riskSummary": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "manualActions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": { "type": "string" },
+              "message": { "type": "string" },
+              "command": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

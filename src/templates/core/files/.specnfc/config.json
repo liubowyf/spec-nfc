@@ -1,0 +1,68 @@
+{
+  "specnfc": {
+    "version": "{{specnfcVersion}}",
+    "templateVersion": "{{templateVersion}}",
+    "language": "zh-CN"
+  },
+  "repository": {
+    "name": "{{repositoryName}}",
+    "mode": "brownfield",
+    "profile": "{{profileName}}",
+    "initializedAt": "{{initializedAt}}"
+  },
+  "modules": {
+    "core": {
+      "enabled": true,
+      "required": true
+    },
+    "context": {
+      "enabled": false
+    },
+    "execution": {
+      "enabled": false
+    },
+    "governance": {
+      "enabled": false
+    },
+    "design-api": {
+      "enabled": false
+    },
+    "design-db": {
+      "enabled": false
+    },
+    "quality": {
+      "enabled": false
+    },
+    "delivery": {
+      "enabled": false
+    }
+  },
+  "paths": {
+    "root": ".specnfc",
+    "specs": "specs",
+    "changes": "specs/changes",
+    "archive": "specs/archive",
+    "context": ".specnfc/context",
+    "execution": ".specnfc/execution",
+    "governance": ".specnfc/governance",
+    "designApi": ".specnfc/design/api",
+    "designDb": ".specnfc/design/db",
+    "quality": ".specnfc/quality",
+    "delivery": ".specnfc/delivery"
+  },
+  "defaults": {
+    "changeStructure": [
+      "01-需求与方案.md",
+      "02-技术设计与选型.md",
+      "03-任务计划与执行.md",
+      "04-验收与交接.md"
+    ],
+    "outputMode": "human",
+    "agentOutputRule": "final-plus-context"
+  },
+  "governance": {
+    "humanDecisionRequired": true,
+    "releaseOwnedByHuman": true,
+    "allowDirectAiRelease": false
+  }
+}

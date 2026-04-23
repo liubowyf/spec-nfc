@@ -16,6 +16,8 @@
 - 若 `.specnfc/indexes/project-index.json` 或 `specs/project/summary.md` 缺失，先补齐项目层协议入口。
 - 唯一正式阶段顺序：`clarify → design → plan → execute → verify → accept → archive`
 - 未完成 `clarify / design / plan`，不得进入 `execute`
+- 处于 `clarify / design` 时必须先提问、再写结论；每轮只允许一个关键问题
+- 未经确认，不得把 `01-需求与方案.md` 的“当前选择”或 `02-技术设计与选型.md` 的“选型结论”写成最终拍板
 - 所有开发任务必须先对应到一项 change。
 - 只允许在当前 change 范围内执行改动。
 - 输出必须回写正式文件，不以聊天记录代替交付。

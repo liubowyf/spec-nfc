@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc runtime sync",
+  "type": "object",
+  "required": [
+    "runtimeArtifactId",
+    "runtimePath",
+    "targetDocPath",
+    "writebackType",
+    "syncState"
+  ],
+  "properties": {
+    "runtimeArtifactId": {
+      "type": "string"
+    },
+    "runtimePath": {
+      "type": "string"
+    },
+    "targetDocPath": {
+      "type": "string"
+    },
+    "writebackType": {
+      "type": "string"
+    },
+    "requiredSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "syncState": {
+      "enum": [
+        "pending",
+        "syncing",
+        "synced",
+        "blocked",
+        "discarded"
+      ]
+    },
+    "lastAttemptAt": {
+      "type": "string"
+    },
+    "lastSyncedAt": {
+      "type": "string"
+    },
+    "syncOwner": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

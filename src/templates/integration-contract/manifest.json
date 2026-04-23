@@ -1,0 +1,56 @@
+{
+  "name": "integration-contract",
+  "description": "多人接口 / service 对接模块",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "integration",
+        "code": "INTEGRATION_CONTRACT_REQUIRED",
+        "message": "多人接口或 service 对接必须先补齐契约文档并推进到可执行状态"
+      },
+      {
+        "scope": "change",
+        "code": "CHANGE_INTEGRATION_READY_REQUIRED",
+        "message": "依赖对接的 change 在对接未就绪前不得进入实现"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_INTEGRATION_DOCS_REVIEW",
+        "message": "仓级对接协作规则应持续维护，供团队和 AI 统一遵循"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/integration-contract",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/integration-contract/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/integration-contract/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/template.md",
+      "target": ".specnfc/integration-contract/template.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/status-flow.md",
+      "target": ".specnfc/integration-contract/status-flow.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "target": "specs/integrations",
+      "mode": "ensure-dir"
+    }
+  ]
+}

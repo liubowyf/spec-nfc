@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc init --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "init"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "specnfcVersion",
+        "profile",
+        "installedModules",
+        "created",
+        "skipped",
+        "protocolAdopted",
+        "repoContract",
+        "skillPack",
+        "projectionStatus",
+        "nfcRuntimeRoot",
+        "nextStep",
+        "nextStepProtocolReady",
+        "dryRun"
+      ],
+      "properties": {
+        "specnfcVersion": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "installedModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skipped": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protocolAdopted": {
+          "const": true
+        },
+        "repoContract": {
+          "type": "string"
+        },
+        "skillPack": {
+          "type": "object",
+          "required": [
+            "id",
+            "version",
+            "locale"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "locale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "projectionStatus": {
+          "type": "string"
+        },
+        "nfcRuntimeRoot": {
+          "type": "string"
+        },
+        "nextStep": {
+          "type": "object",
+          "required": [
+            "currentPhase",
+            "governanceMode",
+            "step",
+            "stepLabel",
+            "primaryAction",
+            "primaryDoc",
+            "primaryGoal",
+            "requiredSections",
+            "doNotDoYet",
+            "exitCriteria",
+            "afterPrimaryAction",
+            "completed",
+            "missing",
+            "blocking",
+            "recommendedNext",
+            "writebackRequired",
+            "projectionDrift",
+            "skillPackDrift",
+            "stepAware",
+            "updatedAt"
+          ],
+          "properties": {
+            "currentPhase": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "step": {
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "stepLabel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryDoc": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryGoal": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requiredSections": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "doNotDoYet": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exitCriteria": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "afterPrimaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "completed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blocking": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedNext": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "writebackRequired": {
+              "type": "boolean"
+            },
+            "projectionDrift": {
+              "type": "boolean"
+            },
+            "skillPackDrift": {
+              "type": "boolean"
+            },
+            "stepAware": {
+              "type": "boolean"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "nextStepProtocolReady": {
+          "type": "boolean"
+        },
+        "dryRun": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

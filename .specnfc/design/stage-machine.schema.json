@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc stage machine",
+  "type": "object",
+  "required": [
+    "canonicalPhases",
+    "legacyAliases"
+  ],
+  "properties": {
+    "canonicalPhases": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "clarify",
+          "design",
+          "plan",
+          "execute",
+          "verify",
+          "accept",
+          "archive"
+        ]
+      }
+    },
+    "legacyAliases": {
+      "type": "object"
+    },
+    "phaseContracts": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

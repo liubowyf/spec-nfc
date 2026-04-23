@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc add --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "add"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "addedModules",
+        "skippedModules",
+        "updatedFiles",
+        "dryRun"
+      ],
+      "properties": {
+        "addedModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skippedModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updatedFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dryRun": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

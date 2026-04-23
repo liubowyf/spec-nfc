@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc projection policy",
+  "type": "object",
+  "required": [
+    "sourceRefs",
+    "generatedFiles",
+    "regenerationPolicy"
+  ],
+  "properties": {
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generatedFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowManualSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "protectedBlocks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "driftSeverity": {
+      "type": "object"
+    },
+    "regenerationPolicy": {
+      "type": "string"
+    },
+    "conflictPolicy": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc demo --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "demo"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "profile",
+        "installedModules",
+        "demoChange",
+        "dryRun"
+      ],
+      "properties": {
+        "profile": {
+          "const": "enterprise"
+        },
+        "installedModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "demoChange": {
+          "type": "object",
+          "required": [
+            "id",
+            "title",
+            "stage"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "stage": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "dryRun": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

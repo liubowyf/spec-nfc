@@ -1,0 +1,47 @@
+{
+  "name": "design-db",
+  "description": "数据库设计模块",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_DB_DESIGN_REQUIRED",
+        "message": "涉及库表变更时必须补齐数据库设计、迁移与回滚说明"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_DB_TEMPLATE_REVIEW",
+        "message": "仓级数据库设计模板应持续维护"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/design/db",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/design/db/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/template.md",
+      "target": ".specnfc/design/db/template.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/design/db/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/migration-checklist.md",
+      "target": ".specnfc/design/db/migration-checklist.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

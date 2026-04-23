@@ -1,0 +1,9 @@
+{
+  "scope": "integration",
+  "targetId": "{{integrationId}}",
+  "targetPath": "specs/integrations/{{integrationId}}",
+  "pendingCount": 0,
+  "targetDocs": [],
+  "items": [],
+  "updatedAt": "{{updatedAt}}"
+}

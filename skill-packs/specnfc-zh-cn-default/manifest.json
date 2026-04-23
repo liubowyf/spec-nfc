@@ -1,0 +1,1507 @@
+{
+  "id": "specnfc-zh-cn-default",
+  "version": "3.2.1",
+  "locale": "zh-CN",
+  "workflowSkills": [
+    "clarify",
+    "design",
+    "plan",
+    "execute",
+    "systematic-debugging",
+    "review",
+    "verify",
+    "accept",
+    "release-handoff",
+    "integration"
+  ],
+  "supportSkills": [
+    "context-refresh",
+    "decision-log",
+    "risk-review",
+    "memory-sync",
+    "normalize-doc",
+    "next-step",
+    "handoff-pack",
+    "release-prep",
+    "regression-first",
+    "request-review",
+    "verify-before-complete"
+  ],
+  "promptCatalog": [
+    "role",
+    "phase",
+    "support"
+  ],
+  "workflowSkillCatalog": [
+    {
+      "slug": "clarify",
+      "name": "需求澄清",
+      "phase": "clarify",
+      "trigger": "当 change 仍需统一问题定义、范围、非目标、当前选择和验收口径时触发。",
+      "prerequisites": [
+        "已绑定 active change",
+        "已读取 specs/changes/<change-id>/01-需求与方案.md",
+        "已读取当前 change check / status / next-step 输出"
+      ],
+      "inputs": [
+        "当前 change dossier",
+        "业务背景、上下文、历史决策",
+        "当前团队协作边界、外部依赖和验收口径"
+      ],
+      "outputs": [
+        "问题定义闭合",
+        "目标 / 非目标 / 范围明确",
+        "方案备选与当前选择明确",
+        "风险与验收口径明确",
+        "标准 next-step 输出"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/01-需求与方案.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/interviews/active/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/01-需求与方案.md"
+        ],
+        "requiredEvidence": [],
+        "blocking": [
+          "01-需求与方案.md 仍是占位内容",
+          "问题定义 / 非目标 / 当前选择 / 验收口径 缺失",
+          "active change 未绑定"
+        ],
+        "completeWhen": [
+          "01-需求与方案.md 已补齐关键 section",
+          "change check 不再提示 PLACEHOLDER_REQUIREMENTS_AND_SOLUTION",
+          "已能明确进入技术设计或任务计划分流"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/deep-interview"
+      ],
+      "sourcePath": "workflow/clarify.md",
+      "hardGate": [
+        "01-需求与方案.md 仍是占位内容",
+        "问题定义 / 非目标 / 当前选择 / 验收口径 缺失",
+        "active change 未绑定"
+      ],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [
+        "design"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "design",
+      "name": "方案设计",
+      "phase": "design",
+      "trigger": "当 change 已完成需求澄清，且复杂度为中高、涉及架构取舍或涉及技术选型时触发。",
+      "prerequisites": [
+        "01-需求与方案.md 已具备执行价值",
+        "当前 change 已触发独立技术设计",
+        "已读取当前 change check / status / next-step 输出"
+      ],
+      "inputs": [
+        "specs/changes/<change-id>/01-需求与方案.md",
+        "现有架构与边界约束",
+        "相关 integration 依赖",
+        "当前仓内既有模式与历史决策"
+      ],
+      "outputs": [
+        "技术背景与约束明确",
+        "候选方案对比清楚",
+        "选型结论可复用、可交接",
+        "影响面与验证思路明确",
+        "标准 next-step 输出"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/02-技术设计与选型.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/plans/active/",
+        ".nfc/specs/scratch/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/02-技术设计与选型.md"
+        ],
+        "requiredEvidence": [],
+        "blocking": [
+          "02-技术设计与选型.md 仍是占位内容",
+          "候选方案对比缺失",
+          "选型结论未形成",
+          "验证思路缺失"
+        ],
+        "completeWhen": [
+          "02-技术设计与选型.md 已补齐关键 section",
+          "change check 不再提示 PLACEHOLDER_TECHNICAL_DESIGN",
+          "已可进入 03-任务计划与执行.md"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/ralplan"
+      ],
+      "sourcePath": "workflow/design.md",
+      "hardGate": [
+        "02-技术设计与选型.md 仍是占位内容",
+        "候选方案对比缺失",
+        "选型结论未形成",
+        "验证思路缺失"
+      ],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [
+        "plan",
+        "integration"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "plan",
+      "name": "任务规划",
+      "phase": "plan",
+      "trigger": "当设计已闭合，需要形成任务切分、验证计划和依赖顺序时触发。",
+      "prerequisites": [
+        "design.md / spec.md 已具备执行价值",
+        "关键风险已记录"
+      ],
+      "inputs": [
+        "design.md",
+        "spec.md",
+        "capabilities.md",
+        "spec-deltas.md"
+      ],
+      "outputs": [
+        "任务切分明确",
+        "验证计划明确",
+        "关键决策与依赖顺序明确"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/plan.md",
+        "specs/changes/<change-id>/tasks.md",
+        "specs/changes/<change-id>/decisions.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/plans/active/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/plan.md",
+          "specs/changes/<change-id>/tasks.md",
+          "specs/changes/<change-id>/decisions.md"
+        ],
+        "requiredEvidence": [],
+        "blocking": [
+          "未形成任务拆分",
+          "未形成验证计划",
+          "未记录关键依赖与决策"
+        ],
+        "completeWhen": [
+          "tasks.md 可直接驱动执行",
+          "验证路径与依赖顺序已明确"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/writing-plans",
+        "oh-my-codex/ralplan"
+      ],
+      "sourcePath": "workflow/plan.md",
+      "hardGate": [
+        "未形成任务拆分",
+        "未形成验证计划",
+        "未记录关键依赖与决策"
+      ],
+      "evidenceRequired": [],
+      "recordTypes": [
+        "review-record",
+        "approval-record"
+      ],
+      "allowedNext": [
+        "execute"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "execute",
+      "name": "执行落地",
+      "phase": "execute",
+      "trigger": "当 plan gate 已满足，需要按计划实施并持续回填状态时触发。",
+      "prerequisites": [
+        "当前阶段已可进入 execute",
+        "依赖 integration 不阻断"
+      ],
+      "inputs": [
+        "plan.md",
+        "tasks.md",
+        "decisions.md",
+        "当前代码与测试状态"
+      ],
+      "outputs": [
+        "实现推进",
+        "风险与阻断更新",
+        "标准 next-step 输出"
+      ],
+      "recommendedCli": "specnfc change stage <change-id> --to in-progress",
+      "writebacks": [
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/notes/working.md",
+        ".nfc/logs/actions/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/plan.md",
+          "specs/changes/<change-id>/tasks.md",
+          "specs/changes/<change-id>/status.md"
+        ],
+        "requiredEvidence": [],
+        "blocking": [
+          "plan gate 未满足",
+          "上游 integration 未 ready / aligned",
+          "缺少当前执行范围与状态回填"
+        ],
+        "completeWhen": [
+          "状态已持续回填",
+          "实现进展与阻断同步到 status.md"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/executor"
+      ],
+      "sourcePath": "workflow/execute.md",
+      "hardGate": [
+        "plan gate 未满足",
+        "上游 integration 未 ready / aligned",
+        "缺少当前执行范围与状态回填"
+      ],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [
+        "verify"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "systematic-debugging",
+      "name": "系统化调试",
+      "phase": "execute",
+      "trigger": "当执行或验证阶段出现失败、异常、回归或不确定根因的问题时触发。",
+      "prerequisites": [
+        "已绑定 active change 或 integration",
+        "已有失败症状、日志或复现步骤"
+      ],
+      "inputs": [
+        "失败现象",
+        "日志 / 栈 / 测试输出",
+        "当前 plan / status / decisions"
+      ],
+      "outputs": [
+        "复现路径明确",
+        "根因假设明确",
+        "最小修复路径与验证方式明确"
+      ],
+      "recommendedCli": "specnfc status && specnfc doctor",
+      "writebacks": [
+        "specs/changes/<change-id>/decisions.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/logs/actions/",
+        ".nfc/notes/working.md",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/status.md",
+          "specs/changes/<change-id>/decisions.md"
+        ],
+        "requiredEvidence": [
+          "失败日志 / 测试输出 / 最小复现证据"
+        ],
+        "blocking": [
+          "没有稳定复现就直接改代码",
+          "根因与现象未区分",
+          "修复后无回归验证计划"
+        ],
+        "completeWhen": [
+          "失败现象可复现或已被边界化",
+          "根因与修复策略已写回正式文档"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/systematic-debugging"
+      ],
+      "sourcePath": "workflow/systematic-debugging.md",
+      "hardGate": [
+        "没有稳定复现就直接改代码",
+        "根因与现象未区分",
+        "修复后无回归验证计划"
+      ],
+      "evidenceRequired": [
+        "失败日志 / 测试输出 / 最小复现证据"
+      ],
+      "recordTypes": [],
+      "allowedNext": [
+        "verify"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "review",
+      "name": "评审复核",
+      "phase": "verify",
+      "trigger": "当设计、实现或对接结果需要形成结构化 review 结论时触发。",
+      "prerequisites": [
+        "待评审对象已明确",
+        "review scope 与 reviewer 角色已知"
+      ],
+      "inputs": [
+        "目标 dossier / diff / 契约文档",
+        "当前风险、验证信息、治理记录"
+      ],
+      "outputs": [
+        "review 结论",
+        "阻断项与建议项",
+        "是否允许进入下一阶段"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/evidence/reviews/<review-id>.json",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/logs/actions/",
+        ".nfc/handoffs/pending/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/status.md"
+        ],
+        "requiredEvidence": [
+          "specs/changes/<change-id>/evidence/reviews/<review-id>.json"
+        ],
+        "blocking": [
+          "review 结论未结构化",
+          "review 阻断未回填 status.md"
+        ],
+        "completeWhen": [
+          "review evidence 已落盘",
+          "blocking / advisory 已映射到下一步"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/review-gate"
+      ],
+      "sourcePath": "workflow/review.md",
+      "hardGate": [
+        "review 结论未结构化",
+        "review 阻断未回填 status.md"
+      ],
+      "evidenceRequired": [
+        "specs/changes/<change-id>/evidence/reviews/<review-id>.json"
+      ],
+      "recordTypes": [
+        "review-record"
+      ],
+      "allowedNext": [
+        "accept"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "verify",
+      "name": "验证验收",
+      "phase": "verify",
+      "trigger": "当实现已完成，需要沉淀验证方式、结果和剩余风险时触发。",
+      "prerequisites": [
+        "执行主体已完成",
+        "相关验证命令可运行"
+      ],
+      "inputs": [
+        "测试结果",
+        "验收范围",
+        "风险清单",
+        "status.md"
+      ],
+      "outputs": [
+        "验证结论明确",
+        "剩余风险明确",
+        "是否进入 accept 的结论"
+      ],
+      "recommendedCli": "specnfc status && specnfc doctor",
+      "writebacks": [
+        "specs/changes/<change-id>/acceptance.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/logs/actions/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/acceptance.md",
+          "specs/changes/<change-id>/status.md"
+        ],
+        "requiredEvidence": [
+          "测试 / 验证记录",
+          "必要时的 review / approval evidence"
+        ],
+        "blocking": [
+          "缺验证结论",
+          "关键失败未说明",
+          "evidence 未与 acceptance 对齐"
+        ],
+        "completeWhen": [
+          "acceptance.md 已形成结论",
+          "status.md 已同步剩余风险与 accept 判断"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/verification-gate"
+      ],
+      "sourcePath": "workflow/verify.md",
+      "hardGate": [
+        "缺验证结论",
+        "关键失败未说明",
+        "evidence 未与 acceptance 对齐"
+      ],
+      "evidenceRequired": [
+        "测试 / 验证记录",
+        "必要时的 review / approval evidence"
+      ],
+      "recordTypes": [
+        "verification-record"
+      ],
+      "allowedNext": [
+        "accept"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "accept",
+      "name": "交付归档",
+      "phase": "accept",
+      "trigger": "当验证已闭合，需要形成交接、发布准备与归档动作时触发。",
+      "prerequisites": [
+        "acceptance.md 已形成结论",
+        "handoff 前置已满足"
+      ],
+      "inputs": [
+        "acceptance.md",
+        "交付要求",
+        "发布影响与回退信息"
+      ],
+      "outputs": [
+        "交付材料齐备",
+        "handoff / archive 条件明确",
+        "标准 next-step 输出"
+      ],
+      "recommendedCli": "specnfc change handoff <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/release-handoff.md",
+        "specs/changes/<change-id>/delivery-checklist.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/handoffs/pending/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/acceptance.md",
+          "specs/changes/<change-id>/release-handoff.md",
+          "specs/changes/<change-id>/delivery-checklist.md",
+          "specs/changes/<change-id>/status.md"
+        ],
+        "requiredEvidence": [
+          "必要时的 verification / approval / release decision 记录"
+        ],
+        "blocking": [
+          "acceptance 未闭合",
+          "handoff 材料不完整",
+          "交付检查单未确认"
+        ],
+        "completeWhen": [
+          "交付材料齐备",
+          "可进入 archive 或 release"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/handoff"
+      ],
+      "sourcePath": "workflow/accept.md",
+      "hardGate": [
+        "acceptance 未闭合",
+        "handoff 材料不完整",
+        "交付检查单未确认"
+      ],
+      "evidenceRequired": [
+        "必要时的 verification / approval / release decision 记录"
+      ],
+      "recordTypes": [],
+      "allowedNext": [
+        "archive",
+        "release-prep"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "release-handoff",
+      "name": "发布交接",
+      "phase": "accept",
+      "trigger": "当验证闭合后，需要形成面向发布、接手人或运维侧的最终交接包时触发。",
+      "prerequisites": [
+        "acceptance 已确认",
+        "必要治理记录已齐备",
+        "交付范围与回退路径已知"
+      ],
+      "inputs": [
+        "acceptance.md",
+        "delivery-checklist.md",
+        "发布影响、回退、验证与依赖信息"
+      ],
+      "outputs": [
+        "可执行发布交接单",
+        "最终交付说明",
+        "是否允许 release / archive 的结论"
+      ],
+      "recommendedCli": "specnfc change handoff <change-id>",
+      "writebacks": [
+        "specs/changes/<change-id>/release-handoff.md",
+        "specs/changes/<change-id>/delivery-checklist.md",
+        "specs/changes/<change-id>/commit-message.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/handoffs/pending/",
+        ".nfc/logs/actions/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/changes/<change-id>/release-handoff.md",
+          "specs/changes/<change-id>/delivery-checklist.md",
+          "specs/changes/<change-id>/status.md"
+        ],
+        "requiredEvidence": [
+          "必要时的 release decision / verification / approval 记录"
+        ],
+        "blocking": [
+          "发布影响、回退、依赖、验证摘要不完整",
+          "交接结论未与 delivery-checklist 对齐"
+        ],
+        "completeWhen": [
+          "交接单与交付检查单已同步",
+          "release / archive 条件明确"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/release-preflight"
+      ],
+      "sourcePath": "workflow/release-handoff.md",
+      "hardGate": [
+        "发布影响、回退、依赖、验证摘要不完整",
+        "交接结论未与 delivery-checklist 对齐"
+      ],
+      "evidenceRequired": [
+        "必要时的 release decision / verification / approval 记录"
+      ],
+      "recordTypes": [
+        "approval-record",
+        "verification-record"
+      ],
+      "allowedNext": [
+        "archive",
+        "release-prep"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "integration",
+      "name": "集成对齐",
+      "phase": "design",
+      "trigger": "当多人接口 / service 对接需要统一契约、责任分工和联调前置时触发。",
+      "prerequisites": [
+        "integration dossier 已存在",
+        "provider / consumer 边界已知"
+      ],
+      "inputs": [
+        "integration contract",
+        "相关 change",
+        "接口 / service 责任边界"
+      ],
+      "outputs": [
+        "契约对齐",
+        "联调前置明确",
+        "依赖阻断可见"
+      ],
+      "recommendedCli": "specnfc integration check <integration-id>",
+      "writebacks": [
+        "specs/integrations/<integration-id>/contract.md",
+        "specs/integrations/<integration-id>/status.md"
+      ],
+      "runtimeObjects": [
+        ".nfc/handoffs/pending/",
+        ".nfc/sync/pending-writeback.json"
+      ],
+      "gate": {
+        "requiredDocs": [
+          "specs/integrations/<integration-id>/contract.md",
+          "specs/integrations/<integration-id>/status.md"
+        ],
+        "requiredEvidence": [
+          "必要时的 integration review / verification evidence"
+        ],
+        "blocking": [
+          "provider / consumer 责任边界不清",
+          "联调前置未写回 contract/status"
+        ],
+        "completeWhen": [
+          "契约、依赖和阻断项可直接支撑联调与 change gate"
+        ]
+      },
+      "writebackPolicy": {
+        "queue": ".nfc/sync/pending-writeback.json",
+        "history": ".nfc/sync/writeback-history.json",
+        "requiredBeforeStageExit": true
+      },
+      "layer": "workflow",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/integration-contract"
+      ],
+      "sourcePath": "workflow/integration.md",
+      "hardGate": [
+        "provider / consumer 责任边界不清",
+        "联调前置未写回 contract/status"
+      ],
+      "evidenceRequired": [
+        "必要时的 integration review / verification evidence"
+      ],
+      "recordTypes": [],
+      "allowedNext": [
+        "plan",
+        "integration"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    }
+  ],
+  "supportSkillCatalog": [
+    {
+      "slug": "context-refresh",
+      "name": "上下文刷新",
+      "category": "context",
+      "purpose": "刷新仓级长期事实、当前 change / integration 事实与入口读取顺序。",
+      "trigger": "进入新阶段前、切换工作对象前或上下文明显漂移时触发。",
+      "prerequisites": [
+        "已定位当前 repo / change / integration",
+        "可读取 `.specnfc/` 与 `specs/`"
+      ],
+      "outputs": [
+        "当前上下文摘要",
+        "缺失上下文",
+        "建议补读项"
+      ],
+      "writebacks": [
+        ".nfc/context/repo-summary.md",
+        ".nfc/context/active-focus.md"
+      ],
+      "recommendedCli": "specnfc status",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/context-index"
+      ],
+      "sourcePath": "support/context-refresh.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "decision-log",
+      "name": "决策记录",
+      "category": "decision",
+      "purpose": "把口头结论、对比过程和拒绝方案收口到正式决策记录。",
+      "trigger": "出现方案取舍、边界变化、拒绝方案或重要结论时触发。",
+      "prerequisites": [
+        "已有明确决策或争议点",
+        "已绑定当前 change"
+      ],
+      "outputs": [
+        "已确认决策",
+        "被拒绝方案",
+        "待确认项"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/decisions.md"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/decision-dossier"
+      ],
+      "sourcePath": "support/decision-log.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "risk-review",
+      "name": "风险复核",
+      "category": "governance",
+      "purpose": "在阶段切换前复核风险、阻断项与可接受的例外。",
+      "trigger": "准备切换阶段、提交 handoff 或判断是否需要 waiver 时触发。",
+      "prerequisites": [
+        "已收集当前阻断与剩余风险",
+        "status.md / acceptance.md 可读"
+      ],
+      "outputs": [
+        "风险列表",
+        "阻断判断",
+        "是否需要 waiver"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/status.md",
+        "specs/changes/<change-id>/acceptance.md"
+      ],
+      "recommendedCli": "specnfc doctor",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/governance"
+      ],
+      "sourcePath": "support/risk-review.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "memory-sync",
+      "name": "记忆同步",
+      "category": "memory",
+      "purpose": "同步项目长期记忆、运行笔记与正式 dossier 的一致性。",
+      "trigger": "运行时中间稿已经形成，需要写回正式索引或 dossier 时触发。",
+      "prerequisites": [
+        "存在待写回项或上下文索引漂移",
+        "`.nfc/sync/*` 可写"
+      ],
+      "outputs": [
+        "待同步记忆项",
+        "写回目标",
+        "同步结果"
+      ],
+      "writebacks": [
+        ".nfc/sync/pending-writeback.json",
+        ".nfc/sync/writeback-history.json"
+      ],
+      "recommendedCli": "specnfc status",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/project-memory"
+      ],
+      "sourcePath": "support/memory-sync.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "normalize-doc",
+      "name": "文档规范化",
+      "category": "quality",
+      "purpose": "按文档合同补齐 section、去除占位内容并统一表达。",
+      "trigger": "check / doctor 提示 section 缺失、占位内容或表达不一致时触发。",
+      "prerequisites": [
+        "已识别目标文档与缺失 section",
+        "对应 document contract 可读"
+      ],
+      "outputs": [
+        "缺失 section",
+        "建议修订项",
+        "规范化结果"
+      ],
+      "writebacks": [
+        "当前正在处理的正式 dossier 文档"
+      ],
+      "recommendedCli": "specnfc doctor",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/document-contract"
+      ],
+      "sourcePath": "support/normalize-doc.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "next-step",
+      "name": "下一步推荐",
+      "category": "control-plane",
+      "purpose": "统一输出当前阶段、已完成、缺失 / 阻断和推荐下一步。",
+      "trigger": "每次 check / stage / doctor / status 之后都应触发。",
+      "prerequisites": [
+        "当前阶段、阻断与完成态已可计算"
+      ],
+      "outputs": [
+        "标准 next-step contract",
+        "人类可读 next-step 摘要"
+      ],
+      "writebacks": [
+        ".specnfc/execution/next-step.json"
+      ],
+      "recommendedCli": "specnfc status --json",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/next-step"
+      ],
+      "sourcePath": "support/next-step.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "handoff-pack",
+      "name": "交接整理",
+      "category": "delivery",
+      "purpose": "整理变更摘要、风险、回退、验证和交接状态。",
+      "trigger": "准备 handoff、archive 或 release 前触发。",
+      "prerequisites": [
+        "已有 acceptance 结论",
+        "交付材料基本齐备"
+      ],
+      "outputs": [
+        "交接摘要",
+        "发布影响",
+        "回退信息"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/release-handoff.md",
+        "specs/changes/<change-id>/delivery-checklist.md"
+      ],
+      "recommendedCli": "specnfc change handoff <change-id>",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/handoff"
+      ],
+      "sourcePath": "support/handoff-pack.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": false,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "release-prep",
+      "name": "发布准备",
+      "category": "delivery",
+      "purpose": "在发布前复核 compliance、安装校验、包内容和最终交付清单。",
+      "trigger": "准备 release 或发布归档时触发。",
+      "prerequisites": [
+        "doctor / status 已运行",
+        "交接单与交付检查单已形成"
+      ],
+      "outputs": [
+        "发布前检查结论",
+        "阻断项",
+        "剩余人工动作"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/delivery-checklist.md",
+        ".nfc/sync/writeback-history.json"
+      ],
+      "recommendedCli": "specnfc doctor",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/release-preflight"
+      ],
+      "sourcePath": "support/release-prep.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [
+        "verification-record",
+        "release-decision-record"
+      ],
+      "allowedNext": [],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "regression-first",
+      "name": "回归优先",
+      "category": "discipline",
+      "purpose": "在修 bug、改行为或做高风险重构前，先固定失败证据与回归验证路径。",
+      "trigger": "涉及缺陷修复、行为变更或高风险重构时触发。",
+      "prerequisites": [
+        "已知目标行为或失败症状",
+        "存在 active change"
+      ],
+      "outputs": [
+        "失败证据",
+        "回归用例 / 验证计划",
+        "是否允许继续编码的判断"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/plan.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/test-driven-development"
+      ],
+      "sourcePath": "support/regression-first.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [],
+      "allowedNext": [],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "request-review",
+      "name": "请求代码评审",
+      "category": "discipline",
+      "purpose": "在宣称 ready / handoff 前，形成明确的 review 请求、范围和结构化结论。",
+      "trigger": "准备进入 verify、handoff 或 release 前触发。",
+      "prerequisites": [
+        "待评审范围已明确",
+        "代码 / 设计 / 契约结果可被审阅"
+      ],
+      "outputs": [
+        "review 请求范围",
+        "review 结论",
+        "阻断项与建议项"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/evidence/reviews/<review-id>.json",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "recommendedCli": "specnfc change check <change-id>",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/requesting-code-review"
+      ],
+      "sourcePath": "support/request-review.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [
+        "review-record"
+      ],
+      "allowedNext": [],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    },
+    {
+      "slug": "verify-before-complete",
+      "name": "完成前验证",
+      "category": "discipline",
+      "purpose": "在宣称完成、进入 handoff 或准备 release 前，核对验证命令、证据和剩余风险。",
+      "trigger": "准备宣称完成、提交交接或执行发布前触发。",
+      "prerequisites": [
+        "已有待声明的完成结果",
+        "可运行验证命令或已有验证证据"
+      ],
+      "outputs": [
+        "验证命令与结果",
+        "剩余风险",
+        "是否允许完成 / handoff / release 的判断"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/acceptance.md",
+        "specs/changes/<change-id>/status.md",
+        "specs/changes/<change-id>/delivery-checklist.md"
+      ],
+      "recommendedCli": "specnfc doctor",
+      "layer": "support",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/verification-before-completion"
+      ],
+      "sourcePath": "support/verify-before-complete.md",
+      "hardGate": [],
+      "evidenceRequired": [],
+      "recordTypes": [
+        "verification-record"
+      ],
+      "allowedNext": [],
+      "blockOnFailure": true,
+      "conflictResolution": "official-skill-overrides-external;formal-record-overrides-runtime"
+    }
+  ],
+  "promptCatalogEntries": [
+    {
+      "slug": "role",
+      "name": "角色 Prompt 目录",
+      "entries": [
+        "架构师：聚焦边界、约束、接口和长期可维护性。",
+        "规划师：聚焦阶段拆分、依赖顺序、验证计划。",
+        "执行者：聚焦最小正确改动、严格验证和状态回填。",
+        "调试者：聚焦复现、根因、失败路径和修复验证。",
+        "评审者：聚焦设计/实现/对接结论、阻断项和建议项。",
+        "验证者：聚焦证据、验收结论、剩余风险。",
+        "风险审阅者：聚焦阻断、豁免、合规边界和回退。",
+        "交付整理者：聚焦 handoff、发布说明和归档收口。"
+      ],
+      "layer": "prompt",
+      "sourcePath": "prompts/role.md"
+    },
+    {
+      "slug": "phase",
+      "name": "阶段 Prompt 目录",
+      "entries": [
+        "需求澄清：统一问题定义、范围、非目标、验收口径。",
+        "方案设计：收敛结构、约束、影响面、替代方案与验证思路。",
+        "任务规划：拆任务、定验证、定依赖。",
+        "执行落地：按 plan 实施并持续回填状态。",
+        "系统化调试：先复现、后定位、再修复，保留证据链。",
+        "评审复核：形成结构化 review 结论与阻断摘要。",
+        "验证验收：形成结果、证据、剩余风险与 accept 结论。",
+        "发布交接：形成交付、回退、验证与接手信息。"
+      ],
+      "layer": "prompt",
+      "sourcePath": "prompts/phase.md"
+    },
+    {
+      "slug": "support",
+      "name": "辅助 Prompt 目录",
+      "entries": [
+        "文档规范化：按 document contract 收口文档。",
+        "决策提炼：把讨论结果提炼进 decisions.md。",
+        "会议记录转 dossier：把过程记录回写到正式 dossier。",
+        "writeback：把运行时内容写回正式文档并更新队列。",
+        "下一步建议：统一生成标准 next-step 输出。"
+      ],
+      "layer": "prompt",
+      "sourcePath": "prompts/support.md"
+    }
+  ],
+  "phaseCoverage": {
+    "clarify": [
+      "clarify"
+    ],
+    "design": [
+      "design",
+      "integration"
+    ],
+    "plan": [
+      "plan"
+    ],
+    "execute": [
+      "execute",
+      "systematic-debugging"
+    ],
+    "verify": [
+      "review",
+      "verify"
+    ],
+    "accept": [
+      "accept",
+      "release-handoff"
+    ]
+  },
+  "projectionRules": {
+    "managedFiles": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".trae/rules/project_rules.md",
+      "opencode.json"
+    ]
+  },
+  "runtimeRules": {
+    "root": ".nfc"
+  },
+  "docContracts": [
+    "proposal",
+    "design",
+    "spec",
+    "plan",
+    "status",
+    "acceptance"
+  ],
+  "writebackRules": [
+    "interviews->proposal",
+    "plans->plan/tasks",
+    "handoff->release-handoff"
+  ],
+  "governanceDefaults": {
+    "mode": "guided"
+  },
+  "governanceSkills": [
+    "review-gate",
+    "approval-gate",
+    "verification-gate",
+    "waiver-review",
+    "writeback"
+  ],
+  "governanceSkillCatalog": [
+    {
+      "slug": "review-gate",
+      "name": "评审门禁",
+      "layer": "governance",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/requesting-code-review",
+        "oh-my-codex/reviewer"
+      ],
+      "trigger": "handoff / release 前需要正式评审结论时触发。",
+      "prerequisites": [
+        "已有待评审对象",
+        "已绑定当前 change / integration"
+      ],
+      "outputs": [
+        "review-record",
+        "阻断项 / 建议项"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/evidence/reviews/<review-id>.json",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "evidenceRequired": [
+        "待评审对象引用",
+        "风险与验证摘要"
+      ],
+      "recordTypes": [
+        "review-record"
+      ],
+      "allowedNext": [
+        "verify",
+        "accept",
+        "release-prep"
+      ],
+      "hardGate": [
+        "无 approved review-record 不得 handoff / release"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "formal-review-record-overrides-external"
+    },
+    {
+      "slug": "approval-gate",
+      "name": "审批门禁",
+      "layer": "governance",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/governance-approval"
+      ],
+      "trigger": "高风险 execute / release 前触发。",
+      "prerequisites": [
+        "已有评审范围与风险摘要"
+      ],
+      "outputs": [
+        "approval-record",
+        "审批条件"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/evidence/approvals/<approval-id>.json",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "evidenceRequired": [
+        "review / verification 引用",
+        "风险说明"
+      ],
+      "recordTypes": [
+        "approval-record"
+      ],
+      "allowedNext": [
+        "execute",
+        "accept",
+        "release-prep"
+      ],
+      "hardGate": [
+        "无 approved approval-record 不得进入高风险 execute / release"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "formal-approval-record-overrides-external"
+    },
+    {
+      "slug": "verification-gate",
+      "name": "验证门禁",
+      "layer": "governance",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "superpowers/verification-before-completion",
+        "oh-my-codex/verifier"
+      ],
+      "trigger": "accept / archive / release 前触发。",
+      "prerequisites": [
+        "已有 acceptance 结论",
+        "已有 fresh evidence"
+      ],
+      "outputs": [
+        "verification-record",
+        "放行 / 阻断结论"
+      ],
+      "writebacks": [
+        "specs/changes/<change-id>/evidence/verifications/<verification-id>.json",
+        "specs/changes/<change-id>/acceptance.md",
+        "specs/changes/<change-id>/status.md"
+      ],
+      "evidenceRequired": [
+        "fresh evidence",
+        "acceptance 摘要"
+      ],
+      "recordTypes": [
+        "verification-record"
+      ],
+      "allowedNext": [
+        "accept",
+        "archive",
+        "release-prep"
+      ],
+      "hardGate": [
+        "无 passed verification-record 不得 accept / archive / release"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "formal-verification-record-overrides-external"
+    },
+    {
+      "slug": "waiver-review",
+      "name": "豁免复核",
+      "layer": "governance",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "specnfc/waiver-policy"
+      ],
+      "trigger": "存在 drift / retention / security 例外需要豁免时触发。",
+      "prerequisites": [
+        "已识别阻断项",
+        "已说明原因与时效"
+      ],
+      "outputs": [
+        "waiver-record",
+        "生效范围"
+      ],
+      "writebacks": [
+        ".specnfc/governance/waivers/<waiver-id>.json"
+      ],
+      "evidenceRequired": [
+        "豁免目标",
+        "原因与时效"
+      ],
+      "recordTypes": [
+        "waiver-record"
+      ],
+      "allowedNext": [
+        "doctor",
+        "release-prep"
+      ],
+      "hardGate": [
+        "无有效 waiver 不得绕过 blocking issue"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "only-valid-waiver-can-downgrade-blockers"
+    },
+    {
+      "slug": "writeback",
+      "name": "正式写回",
+      "layer": "governance",
+      "namespace": "specnfc.official",
+      "trustTier": "governed",
+      "parityReference": [
+        "oh-my-codex/writeback-playbook"
+      ],
+      "trigger": "运行时产物需要回写正式 dossier / record 时触发。",
+      "prerequisites": [
+        "已识别源产物与目标"
+      ],
+      "outputs": [
+        "writeback-request",
+        "写回历史"
+      ],
+      "writebacks": [
+        ".nfc/sync/pending-writeback.json",
+        ".nfc/sync/writeback-history.json"
+      ],
+      "evidenceRequired": [
+        "源产物引用",
+        "目标文档引用"
+      ],
+      "recordTypes": [
+        "writeback-request"
+      ],
+      "allowedNext": [
+        "verify",
+        "accept",
+        "release-prep"
+      ],
+      "hardGate": [
+        "strict / locked 下 pending writeback 阻断 accept / archive / release"
+      ],
+      "blockOnFailure": true,
+      "conflictResolution": "formal-dossier-overrides-runtime-scratch"
+    }
+  ],
+  "playbooks": [
+    {
+      "slug": "writeback",
+      "name": "写回编排",
+      "sourcePath": "playbooks/writeback.md"
+    },
+    {
+      "slug": "stage-gate",
+      "name": "阶段门禁",
+      "sourcePath": "playbooks/stage-gate.md"
+    },
+    {
+      "slug": "debug-loop",
+      "name": "调试闭环",
+      "sourcePath": "playbooks/debug-loop.md"
+    },
+    {
+      "slug": "release-preflight",
+      "name": "发布前检查",
+      "sourcePath": "playbooks/release-preflight.md"
+    }
+  ],
+  "capabilityParityMatrix": "capability-parity-matrix.md",
+  "externalSkillPolicy": {
+    "adapterSchema": ".specnfc/design/external-skill-adapter.schema.json",
+    "importRoot": ".nfc/imports",
+    "externalSkillMirrorRoot": ".nfc/skills/external",
+    "supportedTrustTiers": [
+      "readonly",
+      "workspace",
+      "governed"
+    ],
+    "retentionPolicy": {
+      "public": 30,
+      "internal": 30,
+      "restricted": 14,
+      "sensitive": 7
+    }
+  }
+}

@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc change check --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "change"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "action",
+        "changes",
+        "healthy",
+        "missing",
+        "risks",
+        "runtimeRules",
+        "blocking",
+        "advisory",
+        "nextStep",
+        "contractHealthSummary"
+      ],
+      "properties": {
+        "action": {
+          "const": "check"
+        },
+        "requestedId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "type",
+              "stage",
+              "canonicalStage",
+              "legacyStage",
+              "delivery",
+              "maturity",
+              "integrations",
+              "writeback",
+              "healthy",
+              "missing",
+              "risks"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "canonicalStage": {
+                "type": "string"
+              },
+              "legacyStage": {
+                "type": "string"
+              },
+              "delivery": {
+                "type": "object"
+              },
+              "maturity": {
+                "type": "object"
+              },
+              "integrations": {
+                "type": "object"
+              },
+              "writeback": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "count",
+                  "items",
+                  "targetDocs"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "number"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "targetDocs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": true
+              },
+              "healthy": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "healthy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "runtimeRules": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "blocking": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "advisory": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "nextStep": {
+          "type": "object",
+          "required": [
+            "currentPhase",
+            "governanceMode",
+            "step",
+            "stepLabel",
+            "primaryAction",
+            "primaryDoc",
+            "primaryGoal",
+            "requiredSections",
+            "doNotDoYet",
+            "exitCriteria",
+            "afterPrimaryAction",
+            "completed",
+            "missing",
+            "blocking",
+            "recommendedNext",
+            "writebackRequired",
+            "projectionDrift",
+            "skillPackDrift",
+            "stepAware",
+            "updatedAt"
+          ],
+          "properties": {
+            "currentPhase": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "step": {
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "stepLabel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryDoc": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryGoal": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requiredSections": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "doNotDoYet": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exitCriteria": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "afterPrimaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "completed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blocking": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedNext": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "writebackRequired": {
+              "type": "boolean"
+            },
+            "projectionDrift": {
+              "type": "boolean"
+            },
+            "skillPackDrift": {
+              "type": "boolean"
+            },
+            "stepAware": {
+              "type": "boolean"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "contractHealthSummary": {
+          "type": "object",
+          "required": [
+            "overallStatus",
+            "controlPlaneStatus",
+            "complianceLevel",
+            "currentPhase",
+            "writebackStatus",
+            "projectionStatus",
+            "skillPackStatus",
+            "blockerCount",
+            "advisoryCount",
+            "recommendedFocus",
+            "generatedAt"
+          ],
+          "properties": {
+            "overallStatus": { "type": "string" },
+            "controlPlaneStatus": { "type": "string" },
+            "complianceLevel": { "type": "string" },
+            "currentPhase": { "type": "string" },
+            "writebackStatus": { "type": "string" },
+            "projectionStatus": { "type": "string" },
+            "skillPackStatus": { "type": "string" },
+            "blockerCount": { "type": "number" },
+            "advisoryCount": { "type": "number" },
+            "recommendedFocus": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "generatedAt": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

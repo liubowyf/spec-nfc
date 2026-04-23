@@ -812,10 +812,11 @@ function buildPrimaryNextGuidance({ status, highestPriorityChange, hasProjectSum
       primaryAction: "specnfc change create <change-id>",
       primaryGoal: "先创建一个 change，把接下来的工作纳入标准主链路",
       primaryDoc: "specs/changes/<change-id>/01-需求与方案.md",
-      requiredSections: ["问题定义", "目标", "非目标", "范围", "当前选择", "风险与验收口径"],
+      requiredSections: ["问题定义", "目标", "非目标", "范围", "当前选择", "澄清确认记录", "风险与验收口径"],
       doNotDoYet: dedupe([
         "不要先运行 doctor / explain / add 作为默认起手动作",
         "不要在还没有 change 的情况下直接开始写代码或补多份文档",
+        "不要在未确认前把 `当前选择` 写成最终结论",
         hasProjectSummaryGap ? "不要先被项目汇总占位问题打断主链路起步" : null,
         hasGovernanceRegistryGap ? "不要先把治理注册中心修补当作主起手动作" : null
       ]),
@@ -848,9 +849,9 @@ function buildPrimaryNextGuidance({ status, highestPriorityChange, hasProjectSum
 function buildPrimaryDocRequiredSections(change) {
   switch (change?.canonicalStage) {
     case "clarify":
-      return ["问题定义", "目标", "非目标", "范围", "当前选择", "风险与验收口径"];
+      return ["问题定义", "目标", "非目标", "范围", "当前选择", "澄清确认记录", "风险与验收口径"];
     case "design":
-      return ["触发说明", "技术背景与约束", "候选方案对比", "选型结论"];
+      return ["触发说明", "技术背景与约束", "候选方案对比", "选型结论", "设计确认记录"];
     case "plan":
     case "execute":
       return ["实现计划", "任务清单", "执行状态", "下一步"];

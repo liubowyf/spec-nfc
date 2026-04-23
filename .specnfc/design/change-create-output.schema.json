@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc change create --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "change"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "action",
+        "change",
+        "nextStep",
+        "dryRun"
+      ],
+      "properties": {
+        "action": {
+          "const": "create"
+        },
+        "change": {
+          "type": "object",
+          "required": [
+            "changeId",
+            "title",
+            "type",
+            "stage",
+            "canonicalStage",
+            "changeRoot",
+            "created"
+          ],
+          "properties": {
+            "changeId": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "stage": {
+              "type": "string"
+            },
+            "canonicalStage": {
+              "type": "string"
+            },
+            "changeRoot": {
+              "type": "string"
+            },
+            "created": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "nextStep": {
+          "type": "object",
+          "required": [
+            "currentPhase",
+            "governanceMode",
+            "step",
+            "stepLabel",
+            "primaryAction",
+            "primaryDoc",
+            "primaryGoal",
+            "requiredSections",
+            "doNotDoYet",
+            "exitCriteria",
+            "afterPrimaryAction",
+            "completed",
+            "missing",
+            "blocking",
+            "recommendedNext",
+            "writebackRequired",
+            "projectionDrift",
+            "skillPackDrift",
+            "stepAware",
+            "updatedAt"
+          ],
+          "properties": {
+            "currentPhase": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "step": {
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "stepLabel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryDoc": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "primaryGoal": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requiredSections": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "doNotDoYet": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exitCriteria": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "afterPrimaryAction": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "completed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blocking": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedNext": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "writebackRequired": {
+              "type": "boolean"
+            },
+            "projectionDrift": {
+              "type": "boolean"
+            },
+            "skillPackDrift": {
+              "type": "boolean"
+            },
+            "stepAware": {
+              "type": "boolean"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "dryRun": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

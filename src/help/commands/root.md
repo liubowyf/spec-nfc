@@ -38,5 +38,5 @@
 默认理解：
   - init 负责把项目接入 Spec nfc 协议
   - status 负责告诉你当前仓下一步最应该做什么
-  - change create 之后先补 01-需求与方案.md
+  - change create 之后先围绕 01-需求与方案.md 逐轮提问并获得确认
   - change check 会按复杂度分流到 02-技术设计与选型.md 或 03-任务计划与执行.md

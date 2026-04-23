@@ -1,0 +1,9 @@
+{
+  "scope": "change",
+  "targetId": "{{changeId}}",
+  "targetPath": "specs/changes/{{changeId}}",
+  "pendingCount": 0,
+  "targetDocs": [],
+  "items": [],
+  "updatedAt": "{{updatedAt}}"
+}

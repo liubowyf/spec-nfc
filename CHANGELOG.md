@@ -9,6 +9,25 @@
 
 ---
 
+## v3.2.1 - 2026-04-23
+
+当前补丁版本，聚焦修复 `clarify / design` 阶段“先确认、再定稿”的实际落地问题。
+
+### 修复
+- 修复默认新建 change 时，空白模板字段被误判为“已写当前选择 / 已写选型结论”的问题
+- 修复 `change check / status / doctor` 在未确认前未能稳定提示“先提问、再写结论”的问题
+- 修复默认模板下 readiness gate 与 ambiguity 计算偏差，避免把“确认记录”误判为已完成
+- 修复发布链路仍保留 tar/zip 双包、双安装校验导致发版偏慢的问题，统一切换为 npm-only 校验链路
+
+### 强化
+- `01-需求与方案.md` 与 `02-技术设计与选型.md` 的确认记录正式纳入阶段门禁
+- `change check` 的 next-step 人类可读输出补充“当前需补章节”，让使用者能直接看到该补哪些 section
+- `AGENTS / CLAUDE / Trae rules / clarify / design workflow skill` 同步强调：每轮先问一个关键问题，确认后才能写当前选择或选型结论
+- `package.json.files` 收敛 npm 发布白名单，避免把 `.omx / tests / docs / specs / dist` 等无关内容打进安装包
+- `scripts/release.mjs` 改为基于 `npm-publish` 公开视图打包；默认 fast 模式执行 `pack-verify + npm pack + install + version + doctor`
+- `--strict` 追加 `demo + npm run test:release`，`--full-test` 才追加全量 `npm test`
+- `npm run test:release` 补充 `pack-verify` 与 release dry-run 校验，覆盖公开边界与发布步骤回归
+
 ## v3.2.0 - 2026-04-21
 
 当前公开稳定版本。

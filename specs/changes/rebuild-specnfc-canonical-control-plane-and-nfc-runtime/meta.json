@@ -1,0 +1,9 @@
+{
+  "id": "rebuild-specnfc-canonical-control-plane-and-nfc-runtime",
+  "title": "specnfc 顶层重构：canonical control plane 与 nfc 中文运行时",
+  "type": "design-system",
+  "stage": "design",
+  "createdAt": "2026-04-12T00:00:00+08:00",
+  "updatedAt": "2026-04-12T00:00:00+08:00",
+  "templateVersion": "2.0.0"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "{{changeId}}",
+  "title": "{{changeTitle}}",
+  "type": "{{changeType}}",
+  "docRoles": {
+    "requirementsAndSolution": "{{requirementsAndSolutionPath}}",
+    "technicalDesign": "{{technicalDesignPath}}",
+    "planAndExecution": "{{planAndExecutionPath}}",
+    "acceptanceAndHandoff": "{{acceptanceAndHandoffPath}}"
+  },
+  "canonicalStage": "{{changeCanonicalStage}}",
+  "legacyStage": "{{changeStage}}",
+  "stage": "{{changeStage}}",
+  "createdAt": "{{createdAt}}",
+  "updatedAt": "{{updatedAt}}",
+  "templateVersion": "{{templateVersion}}"
+}

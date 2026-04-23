@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc skill pack manifest",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "locale",
+    "workflowSkills",
+    "supportSkills",
+    "promptCatalog"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "version": { "type": "string" },
+    "locale": { "type": "string" },
+    "workflowSkills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "supportSkills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "governanceSkills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "promptCatalog": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "workflowSkillCatalog": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workflowSkill" }
+    },
+    "supportSkillCatalog": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/supportSkill" }
+    },
+    "governanceSkillCatalog": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/governanceSkill" }
+    },
+    "promptCatalogEntries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/promptCatalogEntry" }
+    },
+    "playbooks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/playbook" }
+    },
+    "phaseCoverage": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "projectionRules": { "type": "object" },
+    "runtimeRules": { "type": "object" },
+    "docContracts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "writebackRules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "governanceDefaults": { "type": "object" },
+    "capabilityParityMatrix": { "type": "string" },
+    "externalSkillPolicy": { "type": "object" }
+  },
+  "$defs": {
+    "gate": {
+      "type": "object",
+      "required": ["requiredDocs", "requiredEvidence", "blocking", "completeWhen"],
+      "properties": {
+        "requiredDocs": { "type": "array", "items": { "type": "string" } },
+        "requiredEvidence": { "type": "array", "items": { "type": "string" } },
+        "blocking": { "type": "array", "items": { "type": "string" } },
+        "completeWhen": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "writebackPolicy": {
+      "type": "object",
+      "required": ["queue", "history", "requiredBeforeStageExit"],
+      "properties": {
+        "queue": { "type": "string" },
+        "history": { "type": "string" },
+        "requiredBeforeStageExit": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "workflowSkill": {
+      "type": "object",
+      "required": [
+        "slug",
+        "name",
+        "phase",
+        "trigger",
+        "prerequisites",
+        "inputs",
+        "outputs",
+        "recommendedCli",
+        "writebacks",
+        "runtimeObjects",
+        "gate",
+        "writebackPolicy"
+      ],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "phase": { "type": "string" },
+        "trigger": { "type": "string" },
+        "prerequisites": { "type": "array", "items": { "type": "string" } },
+        "inputs": { "type": "array", "items": { "type": "string" } },
+        "outputs": { "type": "array", "items": { "type": "string" } },
+        "recommendedCli": { "type": "string" },
+        "writebacks": { "type": "array", "items": { "type": "string" } },
+        "runtimeObjects": { "type": "array", "items": { "type": "string" } },
+        "gate": { "$ref": "#/$defs/gate" },
+        "writebackPolicy": { "$ref": "#/$defs/writebackPolicy" },
+        "layer": { "type": "string" },
+        "namespace": { "type": "string" },
+        "trustTier": { "type": "string" },
+        "parityReference": { "type": "array", "items": { "type": "string" } },
+        "sourcePath": { "type": "string" },
+        "hardGate": { "type": "array", "items": { "type": "string" } },
+        "evidenceRequired": { "type": "array", "items": { "type": "string" } },
+        "recordTypes": { "type": "array", "items": { "type": "string" } },
+        "allowedNext": { "type": "array", "items": { "type": "string" } },
+        "blockOnFailure": { "type": "boolean" },
+        "conflictResolution": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "supportSkill": {
+      "type": "object",
+      "required": [
+        "slug",
+        "name",
+        "category",
+        "purpose",
+        "trigger",
+        "prerequisites",
+        "outputs",
+        "writebacks",
+        "recommendedCli"
+      ],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "purpose": { "type": "string" },
+        "trigger": { "type": "string" },
+        "prerequisites": { "type": "array", "items": { "type": "string" } },
+        "outputs": { "type": "array", "items": { "type": "string" } },
+        "writebacks": { "type": "array", "items": { "type": "string" } },
+        "recommendedCli": { "type": "string" },
+        "layer": { "type": "string" },
+        "namespace": { "type": "string" },
+        "trustTier": { "type": "string" },
+        "parityReference": { "type": "array", "items": { "type": "string" } },
+        "sourcePath": { "type": "string" },
+        "hardGate": { "type": "array", "items": { "type": "string" } },
+        "evidenceRequired": { "type": "array", "items": { "type": "string" } },
+        "recordTypes": { "type": "array", "items": { "type": "string" } },
+        "allowedNext": { "type": "array", "items": { "type": "string" } },
+        "blockOnFailure": { "type": "boolean" },
+        "conflictResolution": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "governanceSkill": {
+      "type": "object",
+      "required": [
+        "slug",
+        "name",
+        "layer",
+        "namespace",
+        "trustTier",
+        "trigger",
+        "prerequisites",
+        "outputs",
+        "writebacks"
+      ],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "layer": { "type": "string" },
+        "namespace": { "type": "string" },
+        "trustTier": { "type": "string" },
+        "parityReference": { "type": "array", "items": { "type": "string" } },
+        "trigger": { "type": "string" },
+        "prerequisites": { "type": "array", "items": { "type": "string" } },
+        "outputs": { "type": "array", "items": { "type": "string" } },
+        "writebacks": { "type": "array", "items": { "type": "string" } },
+        "evidenceRequired": { "type": "array", "items": { "type": "string" } },
+        "recordTypes": { "type": "array", "items": { "type": "string" } },
+        "allowedNext": { "type": "array", "items": { "type": "string" } },
+        "hardGate": { "type": "array", "items": { "type": "string" } },
+        "blockOnFailure": { "type": "boolean" },
+        "conflictResolution": { "type": "string" },
+        "sourcePath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "promptCatalogEntry": {
+      "type": "object",
+      "required": ["slug", "name", "entries"],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "entries": { "type": "array", "items": { "type": "string" } },
+        "layer": { "type": "string" },
+        "sourcePath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "playbook": {
+      "type": "object",
+      "required": ["slug", "name", "sourcePath"],
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "sourcePath": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

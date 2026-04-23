@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "outputRoot": "dist/public",
+  "targets": {
+    "github-source": {
+      "rootDir": "github-source",
+      "entries": [
+        {
+          "source": "bin",
+          "required": true
+        },
+        {
+          "source": "src",
+          "required": true
+        },
+        {
+          "source": "skill-packs",
+          "required": true
+        },
+        {
+          "source": ".specnfc/design",
+          "required": true
+        },
+        {
+          "source": "scripts/bootstrap.mjs",
+          "required": true
+        },
+        {
+          "source": "scripts/pack-verify.mjs",
+          "required": true
+        },
+        {
+          "source": "tests/public",
+          "required": true
+        },
+        {
+          "source": "package-lock.json",
+          "required": true
+        },
+        {
+          "source": "CHANGELOG.md",
+          "required": false
+        },
+        {
+          "source": "README.md",
+          "required": false
+        },
+        {
+          "source": "README.en.md",
+          "required": false
+        },
+        {
+          "source": "LICENSE",
+          "required": false
+        },
+        {
+          "source": "CONTRIBUTING.md",
+          "required": false
+        },
+        {
+          "source": "SUPPORT.md",
+          "required": false
+        },
+        {
+          "source": "MAINTAINERS.md",
+          "required": false
+        },
+        {
+          "source": "SECURITY.md",
+          "required": false
+        },
+        {
+          "source": ".github",
+          "required": false
+        },
+        {
+          "source": "examples/public",
+          "required": false,
+          "destination": "examples"
+        },
+        {
+          "source": "specs/public-samples",
+          "required": false
+        }
+      ],
+      "manifest": {
+        "description": "Spec-driven Coding 协议与 CLI 工具",
+        "private": false,
+        "scripts": {
+          "test": "node --test tests/public/**/*.test.mjs",
+          "test:public": "node --test tests/public/**/*.test.mjs",
+          "pack:verify": "node ./scripts/pack-verify.mjs --json",
+          "dev:bootstrap": "node ./scripts/bootstrap.mjs"
+        },
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/liubowyf/spec-nfc-cli.git"
+        },
+        "homepage": "https://github.com/liubowyf/spec-nfc-cli#readme",
+        "bugs": {
+          "url": "https://github.com/liubowyf/spec-nfc-cli/issues"
+        },
+        "keywords": [
+          "spec",
+          "cli",
+          "workflow",
+          "spec-driven-coding",
+          "ai-agent"
+        ],
+        "files": [
+          "bin",
+          "src",
+          "skill-packs",
+          ".specnfc/design",
+          "CHANGELOG.md",
+          "README.md",
+          "README.en.md",
+          "SUPPORT.md",
+          "MAINTAINERS.md",
+          "LICENSE"
+        ]
+      }
+    },
+    "npm-publish": {
+      "rootDir": "npm-publish",
+      "entries": [
+        {
+          "source": "bin",
+          "required": true
+        },
+        {
+          "source": "src",
+          "required": true
+        },
+        {
+          "source": "skill-packs",
+          "required": true
+        },
+        {
+          "source": ".specnfc/design",
+          "required": true
+        },
+        {
+          "source": "package-lock.json",
+          "required": true
+        },
+        {
+          "source": "CHANGELOG.md",
+          "required": false
+        },
+        {
+          "source": "README.md",
+          "required": false
+        },
+        {
+          "source": "README.en.md",
+          "required": false
+        },
+        {
+          "source": "LICENSE",
+          "required": false
+        }
+      ],
+      "manifest": {
+        "description": "Spec-driven Coding 协议与 CLI 工具",
+        "private": false,
+        "scripts": {},
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/liubowyf/spec-nfc-cli.git"
+        },
+        "homepage": "https://github.com/liubowyf/spec-nfc-cli#readme",
+        "bugs": {
+          "url": "https://github.com/liubowyf/spec-nfc-cli/issues"
+        },
+        "keywords": [
+          "spec",
+          "cli",
+          "workflow",
+          "spec-driven-coding",
+          "ai-agent"
+        ],
+        "files": [
+          "bin",
+          "src",
+          "skill-packs",
+          ".specnfc/design",
+          "CHANGELOG.md",
+          "README.md",
+          "README.en.md",
+          "LICENSE"
+        ],
+        "publishConfig": {
+          "access": "public",
+          "registry": "https://registry.npmjs.org/"
+        }
+      }
+    }
+  },
+  "tests": {
+    "classification": {
+      "public": [
+        "tests/public/**/*.test.mjs"
+      ],
+      "internalCandidates": [
+        "tests/cli.test.mjs",
+        "tests/verification-regression.test.mjs",
+        "tests/projection-skillpack-v3.test.mjs",
+        "tests/security-boundaries.test.mjs",
+        "tests/governance-records.test.mjs",
+        "tests/external-skill-imports.test.mjs"
+      ]
+    }
+  },
+  "audit": {
+    "blacklistTerms": [
+      "内部团队名称",
+      "内部项目代号",
+      "内部知识库地址",
+      "internal-doc-host",
+      "internal-drive-link",
+      "internal-release-channel",
+      "internal-agent-id",
+      "internal-team-runtime"
+    ],
+    "whitelistTerms": [
+      "团队协作",
+      "多 Agent 团队模式",
+      "skill pack",
+      "team mode"
+    ]
+  }
+}

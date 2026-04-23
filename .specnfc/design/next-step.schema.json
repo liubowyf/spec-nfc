@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc next step",
+  "type": "object",
+  "required": [
+    "currentPhase",
+    "governanceMode",
+    "step",
+    "stepLabel",
+    "primaryAction",
+    "primaryDoc",
+    "primaryGoal",
+    "requiredSections",
+    "doNotDoYet",
+    "exitCriteria",
+    "afterPrimaryAction",
+    "completed",
+    "missing",
+    "blocking",
+    "recommendedNext",
+    "writebackRequired",
+    "projectionDrift",
+    "skillPackDrift",
+    "stepAware",
+    "updatedAt"
+  ],
+  "properties": {
+    "currentPhase": {
+      "enum": [
+        "clarify",
+        "design",
+        "plan",
+        "execute",
+        "verify",
+        "accept",
+        "archive"
+      ]
+    },
+    "governanceMode": {
+      "enum": [
+        "advisory",
+        "guided",
+        "strict",
+        "locked"
+      ]
+    },
+    "step": {
+      "type": [
+        "string",
+        "number",
+        "null"
+      ]
+    },
+    "stepLabel": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primaryAction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primaryDoc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primaryGoal": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requiredSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "doNotDoYet": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exitCriteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "afterPrimaryAction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "completed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blocking": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommendedNext": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "writebackRequired": {
+      "type": "boolean"
+    },
+    "projectionDrift": {
+      "type": "boolean"
+    },
+    "skillPackDrift": {
+      "type": "boolean"
+    },
+    "interviewRound": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "interviewTarget": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ambiguityPercent": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "confirmedFacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "readinessGates": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "object"
+        ]
+      }
+    },
+    "focusQuestion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "writebackSections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stepAware": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

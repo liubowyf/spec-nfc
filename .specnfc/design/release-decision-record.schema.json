@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc release decision record",
+  "type": "object",
+  "required": [
+    "recordId",
+    "releaseTag",
+    "decision",
+    "approver",
+    "changeRefs",
+    "integrationRefs",
+    "verificationRecordRefs",
+    "waiverRefs",
+    "createdAt"
+  ],
+  "properties": {
+    "recordId": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "blocked"
+      ]
+    },
+    "approver": {
+      "type": "string"
+    },
+    "changeRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "integrationRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verificationRecordRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "waiverRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

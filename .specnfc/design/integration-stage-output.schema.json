@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc integration stage --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "integration"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "action",
+        "integration",
+        "nextStep"
+      ],
+      "properties": {
+        "action": {
+          "const": "stage"
+        },
+        "integration": {
+          "type": "object",
+          "required": [
+            "id",
+            "provider",
+            "consumers",
+            "changes",
+            "status",
+            "canonicalStage",
+            "legacyStage",
+            "updatedAt"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "provider": {
+              "type": "string"
+            },
+            "consumers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "status": {
+              "type": "string"
+            },
+            "canonicalStage": {
+              "type": "string"
+            },
+            "legacyStage": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "nextStep": {
+          "type": "object",
+          "required": [
+            "currentPhase",
+            "governanceMode",
+            "completed",
+            "missing",
+            "blocking",
+            "recommendedNext",
+            "writebackRequired",
+            "projectionDrift",
+            "skillPackDrift",
+            "updatedAt"
+          ],
+          "properties": {
+            "currentPhase": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "completed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blocking": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedNext": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "writebackRequired": {
+              "type": "boolean"
+            },
+            "projectionDrift": {
+              "type": "boolean"
+            },
+            "skillPackDrift": {
+              "type": "boolean"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

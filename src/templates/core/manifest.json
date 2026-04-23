@@ -1,0 +1,82 @@
+{
+  "name": "core",
+  "description": "初始化最小可用骨架",
+  "required": true,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_WORKFLOW_REQUIRED",
+        "message": "所有开发任务必须先绑定 change 并按 change 主链路推进"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_ENTRYPOINT_SYNC",
+        "message": "仓级入口文件与 .specnfc 规则源需要保持同步"
+      }
+    ]
+  },
+  "files": [
+    {
+      "source": "files/.specnfc/config.json",
+      "target": ".specnfc/config.json",
+      "mode": "merge"
+    },
+    {
+      "source": "files/.specnfc/README.md",
+      "target": ".specnfc/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/specs/README.md",
+      "target": "specs/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENTS.md",
+      "target": "AGENTS.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/CLAUDE.md",
+      "target": "CLAUDE.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/opencode.json",
+      "target": "opencode.json",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/.trae/rules/project_rules.md",
+      "target": ".trae/rules/project_rules.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "target": ".specnfc",
+      "mode": "ensure-dir"
+    },
+    {
+      "target": ".trae",
+      "mode": "ensure-dir"
+    },
+    {
+      "target": ".trae/rules",
+      "mode": "ensure-dir"
+    },
+    {
+      "target": "specs",
+      "mode": "ensure-dir"
+    },
+    {
+      "target": "specs/changes",
+      "mode": "ensure-dir"
+    },
+    {
+      "target": "specs/archive",
+      "mode": "ensure-dir"
+    }
+  ]
+}

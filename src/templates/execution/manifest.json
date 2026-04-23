@@ -1,0 +1,72 @@
+{
+  "name": "execution",
+  "description": "执行层",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_EXECUTION_FLOW_REQUIRED",
+        "message": "执行前必须遵循当前 change 的阶段、输入输出和交接规则"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_RUNTIME_RULES_REVIEW",
+        "message": "仓级 execution 文档应持续维护团队运行规则"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/execution",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/execution/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/execution/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/agents.md",
+      "target": ".specnfc/execution/agents.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/input-output.md",
+      "target": ".specnfc/execution/input-output.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/handoff.md",
+      "target": ".specnfc/execution/handoff.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/dispatch.md",
+      "target": ".specnfc/execution/dispatch.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/prompt-templates.md",
+      "target": ".specnfc/execution/prompt-templates.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/team-runtime.md",
+      "target": ".specnfc/execution/team-runtime.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/team-recovery.md",
+      "target": ".specnfc/execution/team-recovery.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "context",
+  "description": "上下文层",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_CONTEXT_REVIEW_REQUIRED",
+        "message": "进入实现前必须确认当前 change 已补齐上下文相关信息"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_CONTEXT_DOCS_REVIEW",
+        "message": "仓级 context 文档需要持续维护，供 AI 与团队共用"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/context",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/context/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/context/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/system.md",
+      "target": ".specnfc/context/system.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/coding-rules.md",
+      "target": ".specnfc/context/coding-rules.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/architecture.md",
+      "target": ".specnfc/context/architecture.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/domain.md",
+      "target": ".specnfc/context/domain.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/update-checklist.md",
+      "target": ".specnfc/context/update-checklist.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

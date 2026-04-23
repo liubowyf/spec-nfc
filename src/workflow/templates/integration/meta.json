@@ -1,0 +1,11 @@
+{
+  "id": "{{integrationId}}",
+  "provider": "{{provider}}",
+  "consumers": {{consumersJson}},
+  "changes": {{changesJson}},
+  "canonicalStage": "{{integrationCanonicalStage}}",
+  "legacyStage": "{{integrationStatus}}",
+  "status": "{{integrationStatus}}",
+  "createdAt": "{{createdAt}}",
+  "updatedAt": "{{updatedAt}}"
+}

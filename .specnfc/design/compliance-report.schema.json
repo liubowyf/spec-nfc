@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc compliance report",
+  "type": "object",
+  "required": [
+    "scope",
+    "complianceLevel",
+    "blockingIssues",
+    "advisoryIssues",
+    "generatedAt"
+  ],
+  "properties": {
+    "scope": {
+      "type": "string"
+    },
+    "complianceLevel": {
+      "type": "string"
+    },
+    "blockingIssues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "advisoryIssues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missingDocs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "projectionStatus": {
+      "type": "string"
+    },
+    "stageStatus": {
+      "type": "string"
+    },
+    "runtimeSyncStatus": {
+      "type": "string"
+    },
+    "recommendedActions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generatedAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

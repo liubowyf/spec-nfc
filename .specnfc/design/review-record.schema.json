@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc review record",
+  "type": "object",
+  "required": [
+    "recordId",
+    "scope",
+    "targetId",
+    "stage",
+    "reviewType",
+    "reviewer",
+    "verdict",
+    "summary",
+    "evidenceRefs",
+    "createdAt"
+  ],
+  "properties": {
+    "recordId": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "change",
+        "integration"
+      ]
+    },
+    "targetId": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "reviewType": {
+      "type": "string"
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "iterate",
+        "rejected"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

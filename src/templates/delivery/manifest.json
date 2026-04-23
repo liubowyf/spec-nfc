@@ -1,0 +1,62 @@
+{
+  "name": "delivery",
+  "description": "交付集成模块",
+  "required": false,
+  "rules": {
+    "blocking": [
+      {
+        "scope": "change",
+        "code": "CHANGE_DELIVERY_HANDOFF_REQUIRED",
+        "message": "进入交接与归档前必须补齐交付自检与交接材料"
+      }
+    ],
+    "advisory": [
+      {
+        "scope": "repository",
+        "code": "REPOSITORY_DELIVERY_POLICY_REVIEW",
+        "message": "仓级交付策略文档应与团队发布流程保持一致"
+      }
+    ]
+  },
+  "files": [
+    {
+      "target": ".specnfc/delivery",
+      "mode": "ensure-dir"
+    },
+    {
+      "source": "files/README.md",
+      "target": ".specnfc/delivery/README.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/AGENT.md",
+      "target": ".specnfc/delivery/AGENT.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/branch-policy.md",
+      "target": ".specnfc/delivery/branch-policy.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/commit-policy.md",
+      "target": ".specnfc/delivery/commit-policy.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/push-policy.md",
+      "target": ".specnfc/delivery/push-policy.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/delivery-checklist.md",
+      "target": ".specnfc/delivery/delivery-checklist.md",
+      "mode": "skip-if-exists"
+    },
+    {
+      "source": "files/commit-template.md",
+      "target": ".specnfc/delivery/commit-template.md",
+      "mode": "skip-if-exists"
+    }
+  ]
+}

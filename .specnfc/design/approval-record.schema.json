@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc approval record",
+  "type": "object",
+  "required": [
+    "recordId",
+    "scope",
+    "targetId",
+    "stage",
+    "approvalType",
+    "approver",
+    "decision",
+    "reviewRecordRefs",
+    "verificationRecordRefs",
+    "createdAt"
+  ],
+  "properties": {
+    "recordId": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "change",
+        "integration"
+      ]
+    },
+    "targetId": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "approvalType": {
+      "type": "string"
+    },
+    "approver": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "rejected",
+        "expired"
+      ]
+    },
+    "reviewRecordRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verificationRecordRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "validUntil": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

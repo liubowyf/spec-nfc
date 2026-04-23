@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "specnfc doctor --json output",
+  "type": "object",
+  "required": [
+    "ok",
+    "command",
+    "mode",
+    "cwd",
+    "data",
+    "warnings",
+    "next"
+  ],
+  "properties": {
+    "ok": {
+      "const": true
+    },
+    "command": {
+      "const": "doctor"
+    },
+    "mode": {
+      "const": "json"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "initialized",
+        "profile",
+        "installedModules",
+        "healthy",
+        "missing",
+        "risks",
+        "changes",
+        "integrations",
+        "integrationDependencies",
+        "releaseReadiness",
+        "runtimeRules",
+        "repositoryAdvisories",
+        "projectMemory",
+        "controlPlane",
+        "nextStepProtocol",
+        "compliance",
+        "contractHealthSummary"
+      ],
+      "properties": {
+        "initialized": {
+          "const": true
+        },
+        "profile": {
+          "type": "string"
+        },
+        "installedModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "healthy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "changes": {
+          "type": "object"
+        },
+        "integrations": {
+          "type": "object"
+        },
+        "integrationDependencies": {
+          "type": "object"
+        },
+        "releaseReadiness": {
+          "type": "object"
+        },
+        "runtimeRules": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "repositoryAdvisories": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "projectMemory": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "controlPlane": {
+          "type": "object",
+          "required": [
+            "status",
+            "repoContractPath",
+            "governanceMode",
+            "activeSkillPack",
+            "projectionStatus",
+            "projectionHealth",
+            "skillPackStatus",
+            "runtimeSyncStatus",
+            "writebackTargets",
+            "nfcRuntimeRoot",
+            "missingCount"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "repoContractPath": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "activeSkillPack": {
+              "type": "string"
+            },
+            "projectionStatus": {
+              "type": "string"
+            },
+            "projectionHealth": {
+              "type": "object"
+            },
+            "skillPackStatus": {
+              "type": "string"
+            },
+            "runtimeSyncStatus": {
+              "type": "string"
+            },
+            "pendingWritebackCount": {
+              "type": "number"
+            },
+            "writebackTargets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nfcRuntimeRoot": {
+              "type": "string"
+            },
+            "missingCount": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": true
+        },
+        "nextStepProtocol": {
+          "type": "object",
+          "required": [
+            "currentPhase",
+            "governanceMode",
+            "completed",
+            "missing",
+            "blocking",
+            "recommendedNext",
+            "writebackRequired",
+            "projectionDrift",
+            "skillPackDrift",
+            "updatedAt"
+          ],
+          "properties": {
+            "currentPhase": {
+              "type": "string"
+            },
+            "governanceMode": {
+              "type": "string"
+            },
+            "completed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "blocking": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedNext": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "writebackRequired": {
+              "type": "boolean"
+            },
+            "projectionDrift": {
+              "type": "boolean"
+            },
+            "skillPackDrift": {
+              "type": "boolean"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "contractHealthSummary": {
+          "type": "object",
+          "required": [
+            "overallStatus",
+            "controlPlaneStatus",
+            "complianceLevel",
+            "currentPhase",
+            "writebackStatus",
+            "projectionStatus",
+            "skillPackStatus",
+            "blockerCount",
+            "advisoryCount",
+            "recommendedFocus",
+            "generatedAt"
+          ],
+          "properties": {
+            "overallStatus": {
+              "type": "string"
+            },
+            "controlPlaneStatus": {
+              "type": "string"
+            },
+            "complianceLevel": {
+              "type": "string"
+            },
+            "currentPhase": {
+              "type": "string"
+            },
+            "writebackStatus": {
+              "type": "string"
+            },
+            "projectionStatus": {
+              "type": "string"
+            },
+            "skillPackStatus": {
+              "type": "string"
+            },
+            "blockerCount": {
+              "type": "number"
+            },
+            "advisoryCount": {
+              "type": "number"
+            },
+            "recommendedFocus": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "generatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "compliance": {
+          "type": "object",
+          "required": [
+            "scope",
+            "complianceLevel",
+            "blockingIssues",
+            "advisoryIssues",
+            "runtimeSyncStatus",
+            "writebackTargets",
+            "recommendedActions",
+            "generatedAt"
+          ],
+          "properties": {
+            "scope": {
+              "type": "string"
+            },
+            "complianceLevel": {
+              "type": "string"
+            },
+            "blockingIssues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "advisoryIssues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "runtimeSyncStatus": {
+              "type": "string"
+            },
+            "writebackTargets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recommendedActions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "generatedAt": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
