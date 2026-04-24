@@ -75,6 +75,7 @@
               "maturity",
               "integrations",
               "writeback",
+              "confirmationStatus",
               "healthy",
               "missing",
               "risks"
@@ -135,6 +136,16 @@
                     }
                   }
                 },
+                "additionalProperties": true
+              },
+              "confirmationStatus": {
+                "type": "object",
+                "required": [
+                  "requirements",
+                  "technicalDesign",
+                  "executeReady",
+                  "blocking"
+                ],
                 "additionalProperties": true
               },
               "healthy": {
@@ -216,6 +227,7 @@
             "writebackRequired",
             "projectionDrift",
             "skillPackDrift",
+            "confirmationStatus",
             "stepAware",
             "updatedAt"
           ],
@@ -313,6 +325,9 @@
             },
             "skillPackDrift": {
               "type": "boolean"
+            },
+            "confirmationStatus": {
+              "type": "object"
             },
             "stepAware": {
               "type": "boolean"

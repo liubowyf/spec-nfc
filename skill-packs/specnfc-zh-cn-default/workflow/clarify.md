@@ -34,6 +34,7 @@
 - 每轮只允许一个关键问题，拿到答复后再进入下一轮。
 - 未获得确认前，`当前选择` 只能写为“候选 / 推断 / 待确认”，不得写成最终结论。
 - 若已经形成方案偏好，也必须把“最近一次确认问题 / 用户答复摘要 / 是否已确认 / 尚待确认事项”写入正式文档。
+- `specnfc change check/status/doctor --json` 会输出 `confirmationStatus.requirements`；只有 `confirmed=true` 且 `blocking=false` 才允许进入 execute。
 - 若无法当场得到答复，必须显式写入“尚待确认事项”，并阻断进入下游阶段。
 
 ### 每轮固定输出结构
@@ -89,6 +90,7 @@
 - `01-需求与方案.md` 已补齐关键 section
 - `澄清确认记录` 已说明最近一次问题、用户答复摘要与确认状态
 - `change check` 不再提示 `PLACEHOLDER_REQUIREMENTS_AND_SOLUTION`
+- `confirmationStatus.requirements.confirmed=true`
 - 已能明确进入技术设计或任务计划分流
 
 ## 必须写入的正式文档

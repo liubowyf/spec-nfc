@@ -9,6 +9,24 @@
 
 ---
 
+## v3.2.2 - 2026-04-24
+
+当前补丁版本，聚焦把“先确认、再定稿、再进入 execute”的设计要求落成可校验的结构化门禁。
+
+### 修复
+- 修复 `01-需求与方案.md` 已出现“当前选择”但未获用户确认时，工具链缺少机器可读确认状态的问题
+- 修复 `02-技术设计与选型.md` 已出现“选型结论”但未获用户确认时，`status / doctor / change check` 可见性不足的问题
+- 修复规格已补齐但确认缺失时仍可能进入 `execute / in-progress` 的门禁缺口
+
+### 强化
+- `change check --json` 新增 `confirmationStatus`，同时挂载到 change 对象与 next-step 协议
+- `status / doctor` 继承 active change 的确认状态，让团队和 AI Agent 都能看到待确认项
+- human 输出增加“确认状态”摘要，明确“需求当前选择 / 技术选型结论”是已确认还是待确认
+- 中文 `clarify / design` workflow skill 与 `change` 帮助文档同步说明确认门禁
+- 新增回归测试覆盖未确认需求、未确认技术选型、未确认禁止进入 execute 与 schema 契约
+
+---
+
 ## v3.2.1 - 2026-04-23
 
 当前补丁版本，聚焦修复 `clarify / design` 阶段“先确认、再定稿”的实际落地问题。

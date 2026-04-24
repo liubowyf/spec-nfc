@@ -35,6 +35,7 @@
 - 每轮只允许一个关键设计问题，等待明确答复后再推进下一轮。
 - 未获得确认前，`选型结论` 只能写为“当前推荐 / 待确认”，不得写成最终拍板。
 - 若已经形成推荐方案，也必须把“最近一次确认问题 / 用户答复摘要 / 是否已确认 / 尚待确认事项”写入正式文档。
+- `specnfc change check/status/doctor --json` 会输出 `confirmationStatus.technicalDesign`；触发独立技术设计时，只有 `confirmed=true` 且 `blocking=false` 才允许进入 execute。
 - 若设计仍有待确认边界，必须留在设计阶段，不得进入计划或实现。
 
 ### 每轮固定输出结构
@@ -91,6 +92,7 @@
 - `02-技术设计与选型.md` 已补齐关键 section
 - `设计确认记录` 已说明最近一次问题、用户答复摘要与确认状态
 - `change check` 不再提示 `PLACEHOLDER_TECHNICAL_DESIGN`
+- 触发独立技术设计时，`confirmationStatus.technicalDesign.confirmed=true`
 - 已可进入 `03-任务计划与执行.md`
 
 ## 必须写入的正式文档

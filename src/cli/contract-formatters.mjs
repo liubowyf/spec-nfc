@@ -177,10 +177,31 @@ export function buildNextStepProtocolItems(protocol) {
     items.push(`本轮写回章节：${protocol.writebackSections.map(translateProtocolText).join("、")}`);
   }
 
+  if (protocol.confirmationStatus) {
+    const confirmationItems = formatConfirmationStatus(protocol.confirmationStatus);
+    if (confirmationItems.length) {
+      items.push(`确认状态：${confirmationItems.join("；")}`);
+    }
+  }
+
   items.push(`已完成：${(protocol.completed || []).map(translateProtocolText).join("、") || "当前无"}`);
   items.push(`缺失：${(protocol.missing || []).map(translateProtocolText).join("、") || "当前无"}`);
   items.push(`阻断：${(protocol.blocking || []).map(translateProtocolText).join("、") || "当前无"}`);
 
+  return items;
+}
+
+function formatConfirmationStatus(status) {
+  const items = [];
+  if (status.requirements) {
+    items.push(`需求当前选择=${status.requirements.confirmed ? "已确认" : "待确认"}`);
+  }
+  if (status.technicalDesign?.required) {
+    items.push(`技术选型结论=${status.technicalDesign.confirmed ? "已确认" : "待确认"}`);
+  }
+  if (Array.isArray(status.blocking) && status.blocking.length) {
+    items.push(`阻断=${status.blocking.join("、")}`);
+  }
   return items;
 }
 

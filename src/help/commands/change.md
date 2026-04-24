@@ -53,3 +53,5 @@
 - `create` 后不要直接写代码
 - `clarify / design` 阶段不要未确认就直接写死当前选择 / 选型结论
 - `check` 没通过前，不要直接推进 `stage --to in-progress`
+- `stage --to execute / in-progress` 前，`confirmationStatus.requirements.confirmed` 必须为 `true`；如触发独立技术设计，`confirmationStatus.technicalDesign.confirmed` 也必须为 `true`
+- 低复杂度可跳过独立技术设计文档的实质填写，但不能跳过 `01-需求与方案.md` 的用户确认

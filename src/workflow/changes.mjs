@@ -207,6 +207,14 @@ export async function updateChangeStage({
     if (blocking.length) {
       throw new ChangeWorkflowError("PRECONDITION_FAILED", formatRuleBlockingMessage("change", blocking));
     }
+
+    const confirmationBlocking = buildExecuteConfirmationBlocking(report.changes?.[0]);
+    if (confirmationBlocking.length) {
+      throw new ChangeWorkflowError(
+        "PRECONDITION_FAILED",
+        `CONFIRMATION_REQUIRED：进入 execute 前必须先完成用户确认：${confirmationBlocking.join("、")}`
+      );
+    }
   }
 
   if (toStage === "verifying") {
@@ -755,6 +763,11 @@ export async function inspectChanges({ repoRoot, rawChangeId }) {
     const technicalDesignDecision = analyzeTechnicalDesignDecision({
       technicalDesignContent: docContents.technicalDesign
     });
+    const confirmationStatus = buildChangeConfirmationStatus({
+      requirementsAndSolutionContent: docContents.requirementsAndSolution,
+      technicalDesignContent: docContents.technicalDesign,
+      technicalDesignDecision
+    });
     pruneOptionalTechnicalDesignArtifacts({
       repoRoot,
       changeRoot,
@@ -815,6 +828,7 @@ export async function inspectChanges({ repoRoot, rawChangeId }) {
       },
       governance,
       writeback,
+      confirmationStatus,
       technicalDesignDecision,
       healthy: perChangeHealthy,
       missing: perChangeMissing,
@@ -950,6 +964,7 @@ function buildChangeNextStepContract({ requestedId, changes, missing, risks, blo
     writebackRequired: Boolean(target?.writeback?.count),
     projectionDrift: false,
     skillPackDrift: false,
+    confirmationStatus: target?.confirmationStatus ?? buildEmptyConfirmationStatus(),
     interviewRound: stepGuide.interviewRound ?? null,
     interviewTarget: stepGuide.interviewTarget ?? null,
     ambiguityPercent: stepGuide.ambiguityPercent ?? null,
@@ -2402,6 +2417,89 @@ function analyzeTechnicalDesignConfirmation(content) {
     selectionPresent: Boolean(currentSelection),
     confirmed: Boolean(question && answer && isConfirmedValue(confirmed) && isResolvedValue(pending))
   };
+}
+
+function buildEmptyConfirmationStatus() {
+  return {
+    requirements: {
+      required: true,
+      selectionPresent: false,
+      confirmed: false,
+      blocking: true,
+      docRole: "requirementsAndSolution",
+      docPath: CHANGE_DOC_ROLE_FILES.requirementsAndSolution,
+      requiredSection: "澄清确认记录",
+      nextQuestion: "请先补充 01-需求与方案.md，并明确确认当前选择。"
+    },
+    technicalDesign: {
+      required: false,
+      selectionPresent: false,
+      confirmed: true,
+      blocking: false,
+      docRole: "technicalDesign",
+      docPath: CHANGE_DOC_ROLE_FILES.technicalDesign,
+      requiredSection: "设计确认记录",
+      nextQuestion: "当前未触发独立技术设计确认。"
+    },
+    executeReady: false,
+    blocking: ["需求当前选择未确认"]
+  };
+}
+
+function buildChangeConfirmationStatus({ requirementsAndSolutionContent, technicalDesignContent, technicalDesignDecision }) {
+  const requirementsConfirmation = analyzeRequirementsConfirmation(requirementsAndSolutionContent || "");
+  const technicalConfirmation = analyzeTechnicalDesignConfirmation(technicalDesignContent || "");
+  const technicalRequired = Boolean(technicalDesignDecision?.requiresTechnicalDesign);
+  const requirementsBlocking = !requirementsConfirmation.confirmed;
+  const technicalBlocking = technicalRequired && !technicalConfirmation.confirmed;
+  const blocking = [];
+
+  if (requirementsBlocking) {
+    blocking.push(requirementsConfirmation.selectionPresent ? "需求当前选择未确认" : "需求当前选择缺失或未确认");
+  }
+
+  if (technicalBlocking) {
+    blocking.push(technicalConfirmation.selectionPresent ? "技术选型结论未确认" : "技术选型结论缺失或未确认");
+  }
+
+  return {
+    requirements: {
+      required: true,
+      selectionPresent: requirementsConfirmation.selectionPresent,
+      confirmed: requirementsConfirmation.confirmed,
+      blocking: requirementsBlocking,
+      docRole: "requirementsAndSolution",
+      docPath: CHANGE_DOC_ROLE_FILES.requirementsAndSolution,
+      requiredSection: "澄清确认记录",
+      nextQuestion: requirementsConfirmation.confirmed
+        ? "需求当前选择已确认。"
+        : "请明确确认：01-需求与方案.md 的当前选择是否就是本次要推进的方案？"
+    },
+    technicalDesign: {
+      required: technicalRequired,
+      selectionPresent: technicalConfirmation.selectionPresent,
+      confirmed: technicalRequired ? technicalConfirmation.confirmed : true,
+      blocking: technicalBlocking,
+      docRole: "technicalDesign",
+      docPath: CHANGE_DOC_ROLE_FILES.technicalDesign,
+      requiredSection: "设计确认记录",
+      nextQuestion: technicalRequired
+        ? technicalConfirmation.confirmed
+          ? "技术选型结论已确认。"
+          : "请明确确认：02-技术设计与选型.md 的选型结论是否就是最终技术方案？"
+        : "当前未触发独立技术设计确认。"
+    },
+    executeReady: blocking.length === 0,
+    blocking
+  };
+}
+
+function buildExecuteConfirmationBlocking(change) {
+  const status = change?.confirmationStatus;
+  if (!status) {
+    return ["确认状态缺失"];
+  }
+  return Array.isArray(status.blocking) ? status.blocking : [];
 }
 
 function hasEmptyBulletPlaceholder(content, label) {

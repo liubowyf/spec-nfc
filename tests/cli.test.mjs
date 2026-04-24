@@ -2829,6 +2829,11 @@ test("change check 会阻断未确认的需求当前选择", async () => {
 
     const json = JSON.parse(result.stdout);
     assert.ok(json.data.risks.some((item) => item.code === "UNCONFIRMED_REQUIREMENTS_SELECTION"));
+    assert.equal(json.data.changes[0].confirmationStatus.requirements.confirmed, false);
+    assert.equal(json.data.changes[0].confirmationStatus.requirements.blocking, true);
+    assert.deepEqual(json.data.changes[0].confirmationStatus.blocking, ["需求当前选择未确认"]);
+    assert.equal(json.data.nextStep.confirmationStatus.requirements.confirmed, false);
+    assert.equal(json.data.nextStep.confirmationStatus.executeReady, false);
     assert.equal(json.data.nextStep.currentPhase, "clarify");
     assert.ok(json.data.nextStep.requiredSections.includes("澄清确认记录"));
     assert.ok(json.data.nextStep.focusQuestion.includes("请明确确认"));
@@ -2962,10 +2967,57 @@ test("change check 会阻断未确认的技术选型结论", async () => {
 
     const json = JSON.parse(result.stdout);
     assert.ok(json.data.risks.some((item) => item.code === "UNCONFIRMED_TECHNICAL_SELECTION"));
+    assert.equal(json.data.changes[0].confirmationStatus.requirements.confirmed, true);
+    assert.equal(json.data.changes[0].confirmationStatus.technicalDesign.required, true);
+    assert.equal(json.data.changes[0].confirmationStatus.technicalDesign.confirmed, false);
+    assert.deepEqual(json.data.changes[0].confirmationStatus.blocking, ["技术选型结论未确认"]);
+    assert.equal(json.data.nextStep.confirmationStatus.technicalDesign.confirmed, false);
+    assert.equal(json.data.nextStep.confirmationStatus.executeReady, false);
     assert.equal(json.data.nextStep.currentPhase, "design");
     assert.ok(json.data.nextStep.requiredSections.includes("设计确认记录"));
     assert.ok(json.data.nextStep.focusQuestion.includes("请明确确认"));
     assert.ok(json.next.some((item) => item.includes("设计确认记录")));
+  } finally {
+    await rm(cwd, { recursive: true, force: true });
+  }
+});
+
+test("change stage 未确认时拒绝进入 execute", async () => {
+  const cwd = await mkdtemp(path.join(tmpdir(), "specnfc-change-stage-confirmation-gate-"));
+
+  try {
+    runCli(["init", "--cwd", cwd, "--json"]);
+    runCli(["change", "create", "risk-device-link", "--cwd", cwd, "--json"]);
+    await fillChangeForExecution(cwd, "risk-device-link");
+
+    const requirementsPath = path.join(cwd, "specs/changes/risk-device-link/01-需求与方案.md");
+    const requirements = await readFile(requirementsPath, "utf8");
+    await writeFile(
+      requirementsPath,
+      requirements
+        .replace("最近一次确认问题：是否确认以四主文档结构推进本次 change？", "最近一次确认问题：")
+        .replace("最近一次用户答复摘要：确认采用四主文档结构。", "最近一次用户答复摘要：")
+        .replace("当前选择是否已确认：是", "当前选择是否已确认：否")
+        .replace("尚待确认事项：无", "尚待确认事项：是否确认以四主文档结构推进"),
+      "utf8"
+    );
+
+    const result = runCli([
+      "change",
+      "stage",
+      "risk-device-link",
+      "--cwd",
+      cwd,
+      "--to",
+      "execute",
+      "--json"
+    ]);
+
+    assert.notEqual(result.status, 0);
+    const json = JSON.parse(result.stdout);
+    assert.equal(json.ok, false);
+    assert.equal(json.error.code, "PRECONDITION_FAILED");
+    assert.match(json.error.message, /CONFIRMATION_REQUIRED|需求当前选择未确认/);
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }
@@ -4329,6 +4381,8 @@ test("JSON output contract schema 文件已冻结关键字段", async () => {
   assert.ok(changeCheckSchema.properties.data.properties.nextStep.required.includes("primaryAction"));
   assert.ok(changeCheckSchema.properties.data.properties.nextStep.required.includes("stepAware"));
   assert.ok(changeCheckSchema.properties.data.properties.nextStep.required.includes("writebackRequired"));
+  assert.ok(changeCheckSchema.properties.data.properties.nextStep.required.includes("confirmationStatus"));
+  assert.ok(changeCheckSchema.properties.data.properties.changes.items.required.includes("confirmationStatus"));
 
   assert.equal(changeStageSchema.properties.command.const, "change");
   assert.equal(changeStageSchema.properties.data.properties.action.const, "stage");

@@ -694,6 +694,7 @@ function buildDynamicNextStepProtocol({ status, highestPriorityChange, activeCha
     writebackRequired: repository.controlPlane?.runtimeSyncStatus === "pending",
     projectionDrift: repository.controlPlane?.projectionStatus === "drifted",
     skillPackDrift: repository.controlPlane?.skillPackStatus !== "synced",
+    confirmationStatus: activeChangeNextStep?.confirmationStatus ?? highestPriorityChange?.confirmationStatus ?? null,
     interviewRound: activeGuidance.interviewRound ?? interviewProtocol.interviewRound ?? null,
     interviewTarget: activeGuidance.interviewTarget ?? interviewProtocol.interviewTarget ?? null,
     ambiguityPercent: activeGuidance.ambiguityPercent ?? interviewProtocol.ambiguityPercent ?? null,
@@ -724,7 +725,8 @@ function mergeStatusChangeGuidance({ primaryGuidance, activeChangeNextStep }) {
     confirmedFacts: activeChangeNextStep.confirmedFacts,
     readinessGates: activeChangeNextStep.readinessGates,
     focusQuestion: activeChangeNextStep.focusQuestion ?? null,
-    writebackSections: activeChangeNextStep.writebackSections
+    writebackSections: activeChangeNextStep.writebackSections,
+    confirmationStatus: activeChangeNextStep.confirmationStatus ?? null
   };
 }
 

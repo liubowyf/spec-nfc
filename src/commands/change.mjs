@@ -510,6 +510,27 @@ function buildChangePrimaryActionItems(protocol) {
     items.push(`本轮写回章节：${protocol.writebackSections.join("、")}`);
   }
 
+  if (protocol.confirmationStatus) {
+    const confirmationItems = buildConfirmationStatusItems(protocol.confirmationStatus);
+    if (confirmationItems.length) {
+      items.push(`确认状态：${confirmationItems.join("；")}`);
+    }
+  }
+
+  return items;
+}
+
+function buildConfirmationStatusItems(status) {
+  const items = [];
+  if (status.requirements) {
+    items.push(`需求当前选择=${status.requirements.confirmed ? "已确认" : "待确认"}`);
+  }
+  if (status.technicalDesign?.required) {
+    items.push(`技术选型结论=${status.technicalDesign.confirmed ? "已确认" : "待确认"}`);
+  }
+  if (Array.isArray(status.blocking) && status.blocking.length) {
+    items.push(`阻断=${status.blocking.join("、")}`);
+  }
   return items;
 }
 
